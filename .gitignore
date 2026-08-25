@@ -1,0 +1,44 @@
+# IDE / OS
+.idea/
+.vscode/
+.cursor/
+.DS_Store
+Thumbs.db
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+.pytest_cache/
+
+# Secrets & local env
+.env
+*.pem
+*.key
+
+# Backend runtime artifacts (see backend/.gitignore)
+backend/logs/
+backend/bak/
+backend/dump/
+backend/uploads/
+backend/kis_token.json
+backend/**/kis_token.json
+backend/stock_*
+
+backend/reports/**
+!backend/reports/.gitkeep
+
+backend/data/**
+!backend/data/.gitkeep
+
+backend/tools/**
+!backend/tools/.gitkeep
+
+backend/runs/**
+!backend/runs/.gitkeep
+
+backend/tst/
+backend/tests/
+backend/todolist.md

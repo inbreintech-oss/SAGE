@@ -1,0 +1,36 @@
+.idea/
+.vscode/
+.DS_Store
+.env
+.streamlit
+.venv/
+logs/
+bak/
+__pycache__/
+dump/
+build/
+*.egg-info/
+uploads/
+
+# reports — pipeline runtime (reports/{rid}/plan.json, report.json, srcs/ …)
+reports/**
+!reports/.gitkeep
+
+# data — Pangea runtime (did-*/pangea/v1/ …)
+data/**
+!data/.gitkeep
+
+tools/**
+!tools/.gitkeep
+
+runs/**
+!runs/.gitkeep
+
+# pipeline / API runtime artifacts
+kis_token.json
+**/kis_token.json
+/stock_*
+
+tst/
+tests/
+todolist.md

@@ -1,0 +1,19 @@
+# sage-exec worker runtime (subset of requirements.txt)
+pandas==2.3.2
+numpy==2.3.2
+pyarrow==23.0.1
+pydantic==2.11.7
+fastapi==0.135.1
+starlette==0.52.1
+uvicorn>=0.35
+fastmcp==2.14.1
+httpx==0.28.1
+motor==3.7.1
+cryptography==44.0.2
+openpyxl==3.1.5
+authlib==1.6.9
+python-dotenv>=1.1.0
+nest-asyncio==1.6.0
+filelock==3.29.0
+tqdm
+pyyaml

@@ -1,0 +1,26 @@
+{
+  "event": "executed",
+  "msg": "[변동성 집계] 실행 완료 — 산출 key: volatility_summary, period_stats",
+  "task_id": "task-volatility-2b3c4d5e",
+  "task_type": "analyze",
+  "rid": "rp-a1b2c3d4",
+  "result": {
+    "task-volatility-2b3c4d5e": {
+      "status": "success",
+      "keys": {
+        "volatility_summary": {
+          "type": "json",
+          "description": "통화별 일간 수익률 표준편차"
+        },
+        "period_stats": {
+          "type": "json",
+          "description": "기간 최고·최저·평균"
+        }
+      }
+    }
+  },
+  "codegen": {
+    "code": "async def run_task(run, ctx, reporter=None):\n    ...",
+    "task_id": "task-volatility-2b3c4d5e"
+  }
+}

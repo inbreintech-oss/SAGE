@@ -1,0 +1,64 @@
+name: n2-exec
+
+x-exec-environment: &exec-environment
+  SAGE_EXEC_MODE: daemon
+  SAGE_EXEC_DAEMON_PORT: "9000"
+  SAGE_MCP_BASE_URL: http://host.docker.internal:8091
+  NARRATIX_HOME: /host/n2
+  PYTHONPATH: /host/n2
+  # SecretKey 암·복호화 — SAGE_API_KEY(FE REST) 와 별도. 미설정 시 sage-dev-change-me
+  MONGODB_URI: mongodb://host.docker.internal:27017
+  SAGE_DB_NAME: ${SAGE_DB_NAME:-sage_db}
+  SAGE_SECRET_ENCRYPTION_KEY: ${SAGE_SECRET_ENCRYPTION_KEY:-}
+  SAGE_MASTER_KEY: ${SAGE_MASTER_KEY:-}
+
+services:
+  sage-exec-1:
+    build:
+      context: .
+      dockerfile: docker/sage-exec/Dockerfile
+    image: ${SAGE_EXEC_DOCKER_IMAGE:-sage-exec:latest}
+    restart: unless-stopped
+    labels:
+      sage.exec.role: worker
+    environment:
+      <<: *exec-environment
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ${NARRATIX_HOME:-.}:/host/n2:rw
+    ports:
+      - "9001:9000"
+    networks:
+      - sage-exec
+    mem_limit: 768m
+    pids_limit: 256
+    security_opt:
+      - no-new-privileges:true
+
+  sage-exec-2:
+    build:
+      context: .
+      dockerfile: docker/sage-exec/Dockerfile
+    image: ${SAGE_EXEC_DOCKER_IMAGE:-sage-exec:latest}
+    restart: unless-stopped
+    labels:
+      sage.exec.role: worker
+    environment:
+      <<: *exec-environment
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ${NARRATIX_HOME:-.}:/host/n2:rw
+    ports:
+      - "9002:9000"
+    networks:
+      - sage-exec
+    mem_limit: 768m
+    pids_limit: 256
+    security_opt:
+      - no-new-privileges:true
+
+networks:
+  sage-exec:
+    driver: bridge

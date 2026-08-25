@@ -1,0 +1,28 @@
+{
+  "pattern_id": "analytical-standard",
+  "template_id": "analytical-standard",
+  "description": "제목 → 요약 → 섹션 → 표+해석 → 차트+해석 → 결론",
+  "required_roles": [
+    "report_title",
+    "executive_summary",
+    "metrics_table",
+    "table_insight",
+    "primary_chart",
+    "chart_insight",
+    "conclusions"
+  ],
+  "block_sequence": [
+    "document_title:report_title",
+    "summary_card:executive_summary",
+    "section_title:section_header",
+    "metrics_table:metrics_table",
+    "insight_card:table_insight",
+    "primary_chart:primary_chart",
+    "insight_card:chart_insight",
+    "appendix_table:appendix_table",
+    "closing_card:conclusions"
+  ],
+  "chart_count": { "min": 1, "max": 4 },
+  "table_count": { "min": 1, "max": 3 },
+  "must_end_with": "closing_card:conclusions"
+}

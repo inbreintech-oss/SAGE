@@ -1,0 +1,81 @@
+﻿사번,이름,성별,나이,최종학력,재직상태,직급,부서,전문분야,입사일,연봉(만원),이메일,연락처,주소,추석선물수령여부
+IB-2022-001,윤도윤,남,45,학사,재직,대리,Product Design,Adobe XD,2022-08-26,5010,staff_1@inbrein.com,010-6393-1019,서울 서초구 129번길,Y
+IB-2005-002,권주원,남,51,학사,재직,부장,AI & Data,TensorFlow,2005-07-20,13480,staff_2@inbrein.com,010-9367-8640,서울 송파구 40번길,N
+IB-2019-003,강유준,남,41,석사,재직,대리,Platform Dev,Spring Boot,2019-10-14,7710,staff_3@inbrein.com,010-9307-5335,경기 성남시 판교 7번길,Y
+IB-2003-004,신유준,남,51,석사,퇴사,부장,Product Design,Adobe XD,2003-04-09,21930,staff_4@inbrein.com,010-5810-5030,서울 서초구 146번길,N
+IB-2016-005,서소율,여,45,석사,퇴사,과장,Infra & Ops,AWS,2016-03-01,9640,staff_5@inbrein.com,010-2401-1599,서울 서초구 94번길,N
+IB-2012-006,임예준,남,45,학사,휴직,차장,Platform Dev,FastAPI,2012-09-17,10860,staff_6@inbrein.com,010-7540-8350,서울 송파구 138번길,Y
+IB-2025-007,정도윤,남,27,학사,퇴사,사원,Platform Dev,Java,2025-09-12,4190,staff_7@inbrein.com,010-6862-9516,서울 강남구 119번길,N
+IB-2023-008,서지호,남,44,학사,재직,사원,Web Front,Vue.js,2023-05-27,4660,staff_8@inbrein.com,010-9699-8070,서울 송파구 49번길,N
+IB-2013-009,박나은,여,40,학사,재직,차장,Product Design,Adobe XD,2013-07-19,10120,staff_9@inbrein.com,010-1240-5254,서울 마포구 11번길,Y
+IB-2007-010,정아윤,여,50,학사,재직,부장,Product Design,Adobe XD,2007-01-02,12500,staff_10@inbrein.com,010-6412-3254,서울 마포구 27번길,Y
+IB-2026-011,윤시우,남,42,학사,재직,사원,Web Front,Next.js,2026-02-07,3400,staff_11@inbrein.com,010-7429-2655,경기 성남시 판교 139번길,Y
+IB-2026-012,정민준,남,27,학사,퇴사,사원,Infra & Ops,Kubernetes,2026-10-11,3400,staff_12@inbrein.com,010-8610-6305,경기 수원시 영통구 23번길,N
+IB-2011-013,황지호,남,51,학사,재직,차장,Product Design,Figma,2011-12-05,11450,staff_13@inbrein.com,010-4515-3676,경기 수원시 영통구 54번길,Y
+IB-2022-014,임주원,남,30,학사,재직,대리,Web Front,Vue.js,2022-09-12,5700,staff_14@inbrein.com,010-6561-8314,서울 서초구 53번길,N
+IB-2017-015,임이서,여,42,학사,재직,과장,Platform Dev,Python,2017-09-03,8690,staff_15@inbrein.com,010-1710-1373,서울 강남구 9번길,Y
+IB-2024-016,이주원,남,39,학사,휴직,사원,Web Front,React,2024-04-11,4640,staff_16@inbrein.com,010-3826-2551,서울 마포구 104번길,Y
+IB-2023-017,최소율,여,33,학사,재직,사원,Product Design,Adobe XD,2023-04-21,5200,staff_17@inbrein.com,010-4334-4051,경기 성남시 판교 3번길,Y
+IB-2022-018,이나은,여,32,석사,재직,대리,Platform Dev,Java,2022-03-14,6270,staff_18@inbrein.com,010-2274-4572,서울 강남구 106번길,Y
+IB-2023-019,조하준,남,46,석사,퇴사,사원,Web Front,Vue.js,2023-04-28,5470,staff_19@inbrein.com,010-2998-3476,서울 마포구 110번길,N
+IB-2026-020,이예린,여,33,학사,재직,사원,Web Front,TypeScript,2026-05-26,3400,staff_20@inbrein.com,010-6886-9574,서울 송파구 134번길,Y
+IB-2025-021,임유준,남,33,학사,재직,사원,Platform Dev,Python,2025-12-12,4040,staff_21@inbrein.com,010-6756-9887,경기 수원시 영통구 101번길,Y
+IB-2021-022,오서준,남,36,학사,재직,대리,Product Design,UI/UX,2021-12-06,5900,staff_22@inbrein.com,010-8643-6069,경기 수원시 영통구 51번길,Y
+IB-2025-023,윤태윤,남,50,학사,재직,사원,Web Front,TypeScript,2025-12-23,4050,staff_23@inbrein.com,010-3309-1122,서울 마포구 130번길,Y
+IB-2021-024,정나은,여,32,학사,재직,대리,Infra & Ops,Terraform,2021-07-08,7320,staff_24@inbrein.com,010-5732-2160,서울 송파구 91번길,N
+IB-2023-025,강유준,남,40,학사,재직,사원,Infra & Ops,Kubernetes,2023-10-24,4660,staff_25@inbrein.com,010-4526-8413,경기 성남시 판교 52번길,Y
+IB-2023-026,강서아,여,32,학사,재직,사원,Product Design,Adobe XD,2023-03-21,4810,staff_26@inbrein.com,010-8617-5195,서울 강남구 32번길,Y
+IB-2017-027,정하준,남,46,석사,재직,과장,Web Front,Vue.js,2017-10-08,10090,staff_27@inbrein.com,010-1008-5943,서울 마포구 128번길,Y
+IB-2025-028,김나은,여,34,학사,퇴사,사원,Product Design,Adobe XD,2025-02-03,3830,staff_28@inbrein.com,010-9060-3501,서울 서초구 141번길,N
+IB-2013-029,이지호,남,47,박사,휴직,차장,Infra & Ops,Docker,2013-05-07,10030,staff_29@inbrein.com,010-7090-8093,서울 서초구 17번길,Y
+IB-2025-030,이시우,남,29,석사,퇴사,사원,AI & Data,LLM Engineering,2025-06-16,4290,staff_30@inbrein.com,010-3986-7763,경기 수원시 영통구 26번길,N
+IB-2011-031,권서윤,여,54,학사,휴직,차장,Platform Dev,FastAPI,2011-09-20,9650,staff_31@inbrein.com,010-7004-1344,서울 서초구 68번길,Y
+IB-2023-032,김유준,남,32,학사,퇴사,사원,Platform Dev,Spring Boot,2023-03-20,5350,staff_32@inbrein.com,010-3687-8607,경기 수원시 영통구 99번길,N
+IB-2019-033,황도윤,남,44,학사,재직,대리,AI & Data,TensorFlow,2019-10-26,8940,staff_33@inbrein.com,010-5991-9893,서울 송파구 92번길,Y
+IB-2026-034,윤하린,여,31,박사,퇴사,사원,Web Front,TypeScript,2026-06-08,4000,staff_34@inbrein.com,010-9541-2248,서울 서초구 146번길,N
+IB-2016-035,오시우,남,49,학사,재직,과장,AI & Data,Pandas,2016-10-27,7910,staff_35@inbrein.com,010-8107-2549,서울 송파구 114번길,Y
+IB-2020-036,한이서,여,50,학사,재직,대리,Product Design,Adobe XD,2020-11-19,7140,staff_36@inbrein.com,010-3969-4460,경기 성남시 판교 95번길,N
+IB-2007-037,오예준,남,50,석사,재직,부장,Web Front,React,2007-02-03,17700,staff_37@inbrein.com,010-3257-6355,서울 서초구 81번길,Y
+IB-2026-038,윤주원,남,26,학사,재직,사원,Infra & Ops,Docker,2026-07-25,3400,staff_38@inbrein.com,010-4847-9129,경기 수원시 영통구 85번길,Y
+IB-2013-039,강이서,여,47,학사,재직,차장,Infra & Ops,Kubernetes,2013-03-28,12570,staff_39@inbrein.com,010-4648-9462,서울 마포구 89번길,Y
+IB-2016-040,김지호,남,43,학사,휴직,과장,Platform Dev,Java,2016-09-12,7780,staff_40@inbrein.com,010-9170-3984,경기 수원시 영통구 118번길,Y
+IB-2021-041,권민준,남,46,학사,퇴사,대리,Web Front,Vue.js,2021-09-06,6230,staff_41@inbrein.com,010-4657-8432,서울 서초구 126번길,N
+IB-2026-042,최태윤,남,26,학사,재직,사원,AI & Data,Pandas,2026-07-06,3400,staff_42@inbrein.com,010-8511-3799,서울 서초구 51번길,Y
+IB-2014-043,권도윤,남,46,학사,재직,차장,Platform Dev,Spring Boot,2014-08-08,12910,staff_43@inbrein.com,010-8488-7939,서울 송파구 1번길,N
+IB-2020-044,권시우,남,39,학사,휴직,대리,Platform Dev,Java,2020-12-10,6460,staff_44@inbrein.com,010-6152-3072,서울 마포구 34번길,N
+IB-2022-045,김예준,남,40,박사,재직,대리,Product Design,Adobe XD,2022-11-17,6180,staff_45@inbrein.com,010-7128-5567,경기 수원시 영통구 62번길,N
+IB-2000-046,조주원,남,55,학사,휴직,부장,Web Front,TypeScript,2000-09-12,23030,staff_46@inbrein.com,010-3491-6298,서울 마포구 39번길,Y
+IB-2021-047,신예준,남,39,석사,재직,대리,Web Front,Next.js,2021-01-14,6810,staff_47@inbrein.com,010-9300-9350,서울 강남구 73번길,N
+IB-2026-048,최나은,여,41,박사,퇴사,사원,Web Front,TypeScript,2026-10-02,4000,staff_48@inbrein.com,010-2277-7032,서울 서초구 148번길,N
+IB-2026-049,장서준,남,27,학사,재직,사원,Infra & Ops,Kubernetes,2026-05-16,3400,staff_49@inbrein.com,010-5640-5693,서울 송파구 109번길,Y
+IB-2025-050,조유준,남,50,학사,재직,사원,Infra & Ops,Kubernetes,2025-03-10,3950,staff_50@inbrein.com,010-5705-9607,서울 서초구 110번길,Y
+IB-2021-051,박아윤,여,54,학사,재직,대리,Infra & Ops,Docker,2021-07-15,5610,staff_51@inbrein.com,010-9022-6862,경기 성남시 판교 92번길,Y
+IB-2014-052,조나은,여,43,석사,퇴사,차장,Product Design,UI/UX,2014-08-18,8680,staff_52@inbrein.com,010-8423-2765,서울 서초구 149번길,N
+IB-2022-053,신민준,남,43,학사,재직,대리,Product Design,UI/UX,2022-03-08,5850,staff_53@inbrein.com,010-9641-9914,경기 수원시 영통구 52번길,Y
+IB-2016-054,오지아,여,43,석사,재직,과장,Web Front,Next.js,2016-02-21,9980,staff_54@inbrein.com,010-8577-9718,경기 성남시 판교 98번길,Y
+IB-2012-055,윤예린,여,44,학사,재직,차장,Product Design,UI/UX,2012-12-04,10660,staff_55@inbrein.com,010-8869-7047,서울 서초구 52번길,N
+IB-2021-056,정하윤,여,32,학사,재직,대리,Infra & Ops,Terraform,2021-08-03,5670,staff_56@inbrein.com,010-9983-3787,서울 마포구 26번길,Y
+IB-2006-057,최태윤,남,47,학사,재직,부장,AI & Data,TensorFlow,2006-07-05,18900,staff_57@inbrein.com,010-2409-5355,서울 강남구 130번길,Y
+IB-2013-058,정예준,남,44,학사,퇴사,차장,Product Design,Figma,2013-02-14,12730,staff_58@inbrein.com,010-9293-5117,서울 강남구 145번길,N
+IB-2013-059,황지아,여,42,학사,재직,차장,Platform Dev,Python,2013-04-24,13130,staff_59@inbrein.com,010-1143-9867,서울 마포구 60번길,N
+IB-2012-060,한지호,남,45,석사,휴직,차장,Platform Dev,Java,2012-10-22,10810,staff_60@inbrein.com,010-5620-5125,서울 강남구 147번길,Y
+IB-2017-061,최주원,남,37,석사,재직,과장,Web Front,React,2017-01-23,8360,staff_61@inbrein.com,010-5057-5759,경기 성남시 판교 113번길,Y
+IB-2014-062,한이서,여,38,학사,재직,차장,AI & Data,TensorFlow,2014-08-01,9780,staff_62@inbrein.com,010-1811-3195,경기 수원시 영통구 91번길,Y
+IB-2026-063,서서준,남,29,학사,재직,사원,Web Front,Vue.js,2026-01-15,3400,staff_63@inbrein.com,010-8804-1953,서울 마포구 130번길,Y
+IB-2024-064,권서준,남,30,학사,재직,사원,Product Design,Figma,2024-08-27,4410,staff_64@inbrein.com,010-9027-5280,경기 수원시 영통구 35번길,Y
+IB-2023-065,서지호,남,37,학사,재직,사원,Infra & Ops,Terraform,2023-07-23,5680,staff_65@inbrein.com,010-5455-6756,서울 송파구 140번길,Y
+IB-2008-066,임예준,남,55,박사,재직,부장,Web Front,Next.js,2008-05-18,15640,staff_66@inbrein.com,010-9817-5716,서울 송파구 145번길,Y
+IB-2017-067,한민준,남,43,석사,재직,과장,AI & Data,Pandas,2017-03-22,8660,staff_67@inbrein.com,010-4748-1364,경기 성남시 판교 105번길,Y
+IB-2013-068,서유준,남,46,학사,재직,차장,Web Front,Vue.js,2013-12-08,9700,staff_68@inbrein.com,010-3876-2122,경기 성남시 판교 96번길,Y
+IB-2023-069,서나은,여,42,석사,재직,사원,Product Design,Adobe XD,2023-11-20,5630,staff_69@inbrein.com,010-8771-6231,서울 서초구 51번길,Y
+IB-2024-070,황시우,남,33,석사,퇴사,사원,Product Design,Adobe XD,2024-06-13,5160,staff_70@inbrein.com,010-8895-6957,서울 강남구 115번길,N
+IB-2026-071,한하린,여,28,학사,재직,사원,Infra & Ops,Terraform,2026-10-12,3400,staff_71@inbrein.com,010-1492-1633,경기 수원시 영통구 4번길,Y
+IB-2026-072,조아윤,여,49,석사,재직,사원,Platform Dev,Go,2026-03-10,3700,staff_72@inbrein.com,010-5519-5953,서울 송파구 88번길,Y
+IB-2022-073,윤도윤,남,33,학사,재직,대리,Infra & Ops,Docker,2022-04-10,6450,staff_73@inbrein.com,010-1421-4862,서울 강남구 28번길,Y
+IB-2022-074,정태윤,남,31,학사,재직,대리,AI & Data,PyTorch,2022-08-10,5700,staff_74@inbrein.com,010-7690-9772,서울 서초구 59번길,Y
+IB-2025-075,이예준,남,33,학사,휴직,사원,AI & Data,TensorFlow,2025-01-19,3900,staff_75@inbrein.com,010-4156-6148,서울 강남구 47번길,Y
+IB-2025-076,임지호,남,31,학사,재직,사원,Platform Dev,FastAPI,2025-12-19,4100,staff_76@inbrein.com,010-1120-3119,서울 서초구 112번길,Y
+IB-2023-077,조하윤,여,38,석사,재직,사원,Infra & Ops,Kubernetes,2023-07-05,5970,staff_77@inbrein.com,010-6245-6550,서울 서초구 124번길,Y
+IB-2023-078,최주원,남,42,학사,재직,사원,Product Design,UI/UX,2023-07-08,4800,staff_78@inbrein.com,010-4890-2430,서울 강남구 81번길,Y
+IB-2018-079,오도윤,남,41,학사,재직,과장,Web Front,Next.js,2018-01-23,8050,staff_79@inbrein.com,010-5389-4504,서울 마포구 14번길,N
+IB-2026-080,서서아,여,50,석사,재직,사원,Web Front,TypeScript,2026-10-15,3700,staff_80@inbrein.com,010-9655-2832,서울 서초구 2번길,Y

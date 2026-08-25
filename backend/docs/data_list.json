@@ -1,0 +1,51 @@
+{
+  "success": true,
+  "result": [
+    {
+      "_id": "did-fx-report-1bab8d81",
+      "name": "FX Report Dataset",
+      "status": "completed",
+      "category": "finance",
+      "description": "주요 통화 환율 Pangea 통합",
+      "sources": [
+        {
+          "id": "src-a1b2c3d4",
+          "type": "tool",
+          "origin": "yf/fx-rate",
+          "description": "Yahoo Finance 환율 MCP"
+        }
+      ],
+      "options": {
+        "pseudonymization": false
+      },
+      "version": "v1",
+      "created_at": "2026-07-08T04:30:00.000000",
+      "updated_at": "2026-07-08T05:12:00.000000"
+    },
+    {
+      "_id": "did-hr-gift-cd595731",
+      "name": "선물 수령 여부",
+      "status": "completed",
+      "category": "hr",
+      "description": "직원별 선물 수령 여부",
+      "sources": [
+        {
+          "id": "src-97dcd4c6",
+          "type": "file",
+          "origin": "emps.csv",
+          "format": "csv",
+          "options": {
+            "encoding": "utf-8"
+          }
+        }
+      ],
+      "options": {
+        "pseudonymization": false
+      },
+      "version": "v1",
+      "created_at": "2026-03-04T03:24:58.526000",
+      "updated_at": "2026-03-04T03:24:58.527000"
+    }
+  ],
+  "error": null
+}

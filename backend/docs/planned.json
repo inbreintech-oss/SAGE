@@ -1,0 +1,65 @@
+{
+  "event": "planned",
+  "msg": "설계 완료: 주요 통화 환율 추이 및 변동성 분석 — 태스크 5개 (data:환율 데이터 로드, analyze:변동성 집계, visual:추이 차트, narrative:분석 서술, release:보고서 조립)",
+  "rid": "rp-a1b2c3d4",
+  "data": {
+    "_id": "did-fx-report-1bab8d81",
+    "name": "FX Report Dataset",
+    "status": "completed",
+    "category": "finance"
+  },
+  "result": {
+    "plan_id": "pl-fx-volatility-a1b2c3d4",
+    "title": "주요 통화 환율 추이 및 변동성 분석",
+    "description": "USD/EUR/JPY 환율의 기간별 변동성과 추세를 요약",
+    "data_id": "did-fx-report-1bab8d81",
+    "tools": ["yf/fx-rate"],
+    "tasks": [
+      {
+        "task_id": "task-fx-load-1a2b3c4d",
+        "type": "data",
+        "title": "환율 데이터 로드",
+        "description": "Pangea+MCP 갱신",
+        "instruction": "PangeaExDataFrame으로 did-fx-report-1bab8d81을 로드하고 yf/fx-rate MCP로 FXRates 모델을 갱신한 뒤 환율 목록과 dataset_meta를 TaskContext에 저장",
+        "context": [],
+        "tools": ["yf/fx-rate"]
+      },
+      {
+        "task_id": "task-volatility-2b3c4d5e",
+        "type": "analyze",
+        "title": "변동성 집계",
+        "description": "통화별 std·range",
+        "instruction": "upstream task-fx-load-1a2b3c4d의 환율 목록을 기준으로 통화별 일간 수익률 표준편차·기간 최고/최저를 dict/list JSON으로 산출",
+        "context": ["task-fx-load-1a2b3c4d"],
+        "tools": []
+      },
+      {
+        "task_id": "task-fx-chart-3c4d5e6f",
+        "type": "visual",
+        "title": "추이 차트",
+        "description": "시계열 차트 spec",
+        "instruction": "변동성 집계 결과와 시계열 요약을 vega-lite spec JSON으로 생성",
+        "context": ["task-volatility-2b3c4d5e"],
+        "tools": []
+      },
+      {
+        "task_id": "task-narrative-4d5e6f7a",
+        "type": "narrative",
+        "title": "분석 서술",
+        "description": "경영진 요약",
+        "instruction": "upstream 집계·차트 결과만 참조하여 3~5문단 한국어 분석 서술 작성",
+        "context": ["task-volatility-2b3c4d5e", "task-fx-chart-3c4d5e6f"],
+        "tools": []
+      },
+      {
+        "task_id": "task-release-5e6f7a8b",
+        "type": "release",
+        "title": "보고서 조립",
+        "description": "layout JSON",
+        "instruction": "narrative·visual·analyze 결과를 report layout JSON으로 조립하고 release_summary 제공",
+        "context": ["task-narrative-4d5e6f7a", "task-fx-chart-3c4d5e6f", "task-volatility-2b3c4d5e"],
+        "tools": []
+      }
+    ]
+  }
+}

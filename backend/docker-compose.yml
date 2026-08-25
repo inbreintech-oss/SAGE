@@ -1,0 +1,63 @@
+name: n2-db
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=ferret
+      - POSTGRES_PASSWORD=password123
+      - POSTGRES_DB=ferretdb
+    volumes:
+      # 윈도우 권한 문제를 피하기 위해 도커 관리 볼륨(pgvol) 사용 권장
+      - pgvol:/var/lib/postgresql/data
+    healthcheck:
+      # 유저명을 명시하지 않고 단순 연결 확인만 수행
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - ferretdb
+
+  ferretdb:
+    # 1.1.0은 너무 구형입니다. 안정적인 1.23.1을 강력 권장합니다.
+    image: ghcr.io/ferretdb/ferretdb:1.23.1
+    container_name: ferretdb
+    restart: unless-stopped
+    ports:
+      - 27017:27017
+    environment:
+      # URL에 반드시 ID:PW를 포함해야 합니다.
+      - FERRETDB_POSTGRESQL_URL=postgres://ferret:password123@postgres:5432/ferretdb?sslmode=disable
+      - FERRETDB_HANDLER=pg
+      - FERRETDB_TELEMETRY=disable
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - ferretdb
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-viewer
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      # URL 방식이 가장 확실합니다.
+      - ME_CONFIG_MONGODB_URL=mongodb://ferretdb:27017/sage_db
+      - ME_CONFIG_MONGODB_ENABLE_ADMIN=false
+      - ME_CONFIG_BASICAUTH_USERNAME=admin
+      - ME_CONFIG_BASICAUTH_PASSWORD=pass
+    networks:
+      - ferretdb
+    depends_on:
+      - ferretdb
+
+networks:
+  ferretdb:
+
+volumes:
+  pgvol:

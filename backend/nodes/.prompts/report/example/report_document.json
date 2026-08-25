@@ -1,0 +1,112 @@
+{
+  "title": "코스피 10종목 분석 보고서",
+  "description": "주요 종목 재무·밸류에이션 비교",
+  "template_id": "analytical-standard",
+  "pattern_id": "analytical-standard",
+  "version": 1,
+  "plan_id": "pl-example-00000001",
+  "did": "did-stock-data-example",
+  "rid": "rp-example",
+  "layout": {
+    "type": "rows",
+    "blocks": [
+      {"type": "document_title", "key": "report_header", "task_id": "task-narrative-example"},
+      {"type": "summary_card", "key": "executive_summary", "task_id": "task-narrative-example"},
+      {"type": "section_title", "key": "analysis_section", "task_id": "task-narrative-example"},
+      {"type": "metrics_table", "key": "summary_table", "task_id": "task-analyze-example"},
+      {"type": "insight_card", "key": "table_insight", "task_id": "task-narrative-example"},
+      {"type": "primary_chart", "key": "valuation_scatter_chart", "task_id": "task-visual-example"},
+      {"type": "insight_card", "key": "chart_insight", "task_id": "task-narrative-example"},
+      {"type": "closing_card", "key": "conclusions", "task_id": "task-narrative-example"}
+    ]
+  },
+  "data": {
+    "report_header": {
+      "role": "report_title",
+      "text": "코스피 10종목 분석 보고서",
+      "level": 1,
+      "style": {"variant": "emphasis", "accent": "ink", "density": "spacious"},
+      "description": "보고서 제목"
+    },
+    "executive_summary": {
+      "role": "executive_summary",
+      "title": "핵심 요약",
+      "content": "코스피 예시 10종목(유효 10) 기준. PER 평균 12.5로 업종 평균(14.2) 대비 저평가 구간에 6종목이 위치합니다.",
+      "content_type": "markdown",
+      "style": {"variant": "callout", "accent": "muted"},
+      "description": "분석 요약 본문"
+    },
+    "analysis_section": {
+      "role": "section_header",
+      "text": "밸류에이션 분석",
+      "level": 2,
+      "style": {"variant": "emphasis", "accent": "gold", "border": true},
+      "description": "본문 섹션"
+    },
+    "summary_table": {
+      "role": "metrics_table",
+      "header": ["종목코드", "종목명", "PER", "PBR", "ROE"],
+      "columns": [
+        {"key": "ticker", "label": "종목코드"},
+        {"key": "company_name", "label": "종목명"},
+        {"key": "per", "label": "PER"},
+        {"key": "pbr", "label": "PBR"},
+        {"key": "roe", "label": "ROE"}
+      ],
+      "dtypes": {
+        "ticker": {"type": "string"},
+        "company_name": {"type": "string"},
+        "per": {"type": "number", "decimals": 1},
+        "pbr": {"type": "number", "decimals": 2},
+        "roe": {"type": "number", "decimals": 1}
+      },
+      "data": [
+        {"ticker": "005930", "company_name": "삼성전자", "per": 12.5, "pbr": 1.2, "roe": 8.5}
+      ],
+      "style": {"density": "compact", "border": true},
+      "description": "종목별 재무 지표 요약"
+    },
+    "table_insight": {
+      "role": "table_insight",
+      "title": "표 해석",
+      "content": "상위 종목 PER 분포가 업종 평균(14.2) 대비 낮은 편이며, ROE와 PER의 역상관이 두드러집니다.",
+      "content_type": "markdown",
+      "description": "집계 표 해석"
+    },
+    "chart_insight": {
+      "role": "chart_insight",
+      "title": "차트 해석",
+      "content": "산점도에서 저PER·저PBR 군집이 6종목입니다. 업종 평균 PER 14.2 대비 2.0p 낮은 구간이 상대 밸류 후보로 읽힙니다.",
+      "content_type": "markdown",
+      "style": {"variant": "highlight", "accent": "gold"},
+      "description": "산점도 해석"
+    },
+    "valuation_scatter_chart": {
+      "role": "primary_chart",
+      "color": ["#1B4D6E", "#C4A35A"],
+      "title": {
+        "text": "PER-PBR 분포",
+        "subtext": "저PER·저PBR 군집이 상대 밸류 후보",
+        "textStyle": {"color": "#1A1F2E", "fontWeight": 600, "fontSize": 15}
+      },
+      "xAxis": {"type": "value", "name": "PER"},
+      "yAxis": {"type": "value", "name": "PBR", "splitLine": {"show": false}},
+      "series": [{"type": "scatter", "data": [[10.2, 1.1], [15.3, 2.0]], "itemStyle": {"color": "#1B4D6E"}}],
+      "description": "밸류에이션 분포 (upstream visual 산출)"
+    },
+    "conclusions": {
+      "role": "conclusions",
+      "title": "결론 및 제언",
+      "content": "1. **핵심 시사점**: 저PER 군집 종목은 단기 모멘텀 대비 밸류 매력이 상대적으로 높음\n2. **제언**\n   1. ROE 개선 여부를 분기별로 모니터링할 것\n   2. 밸류 대비 모멘텀 괴리 종목은 비중 조정을 검토할 것\n3. 한계: 본 분석은 특정 시점 스냅샷이며 실적 변동 리스크 존재",
+      "content_type": "markdown",
+      "style": {"variant": "emphasis", "accent": "ink"},
+      "description": "보고서 마무리"
+    }
+  },
+  "tasks": {
+    "task-load-example": {"status": "success", "keys": ["stock_list", "dataset_meta"]},
+    "task-analyze-example": {"status": "success", "keys": ["financial_stats", "summary_table"]},
+    "task-visual-example": {"status": "success", "keys": ["valuation_scatter_chart"]},
+    "task-narrative-example": {"status": "success", "keys": ["report_document"]}
+  }
+}
