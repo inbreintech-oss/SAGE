@@ -1,0 +1,85 @@
+﻿body {
+    /* light: slate-50 / dark: Mantine dark-8 */
+    background-color: light-dark(var(--sage-page-bg), var(--mantine-color-dark-8));
+}
+
+/* React Query Devtools — 시연 촬영 시 숨김 (App.tsx + hide-rq-devtools) */
+body.hide-rq-devtools .tsqd-open-btn-container,
+body.hide-rq-devtools .tsqd-main-panel,
+body.hide-rq-devtools [class*="tsqd-"] {
+    display: none !important;
+}
+
+/**
+ * 보고서 미리보기 인쇄
+ * visibility:hidden 금지 — 부모 높이 붕괴로 본문 텍스트가 겹쳐 인쇄됨.
+ */
+@media print {
+    @page {
+        margin: 12mm;
+    }
+
+    html,
+    body {
+        height: auto !important;
+        max-height: none !important;
+        overflow: visible !important;
+        background: #ffffff !important;
+    }
+
+    body:has([data-report-print-root]) header,
+    body:has([data-report-print-root]) nav {
+        display: none !important;
+    }
+
+    /* 관리 모달 인쇄: 앱 루트 숨기고 모달 내용만 문서 흐름으로 */
+    body:has(.mantine-Modal-root [data-report-print-root]) #root {
+        display: none !important;
+    }
+
+    body:has(.mantine-Modal-root [data-report-print-root]) .mantine-Modal-root,
+    body:has(.mantine-Modal-root [data-report-print-root]) .mantine-Modal-inner,
+    body:has(.mantine-Modal-root [data-report-print-root]) .mantine-Modal-content,
+    body:has(.mantine-Modal-root [data-report-print-root]) .mantine-Modal-body {
+        position: static !important;
+        inset: auto !important;
+        transform: none !important;
+        width: 100% !important;
+        max-width: none !important;
+        height: auto !important;
+        max-height: none !important;
+        overflow: visible !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .mantine-Modal-overlay,
+    .mantine-Overlay-root {
+        display: none !important;
+    }
+
+    /* React Query Devtools — 인쇄/PDF에 섞이지 않도록 */
+    .tsqd-open-btn-container,
+    .tsqd-main-panel,
+    [class*="tsqd-"] {
+        display: none !important;
+    }
+
+    [data-report-print-root] {
+        position: static !important;
+        width: 100% !important;
+        max-width: none !important;
+        height: auto !important;
+        min-height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        background: #ffffff !important;
+        overflow: visible !important;
+        transform: none !important;
+    }
+}

@@ -1,0 +1,9 @@
+/* ── 페이지 Context Header (Top Bar 아래) ── */
+
+.root {
+    width: 100%;
+    flex-shrink: 0;
+    background-color: var(--sage-surface-card, #ffffff);
+    border-bottom: 1px solid var(--sage-border-color);
+    box-sizing: border-box;
+}

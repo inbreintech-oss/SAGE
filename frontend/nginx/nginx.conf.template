@@ -1,0 +1,61 @@
+server {
+    charset utf-8;
+
+    listen ${BREWSYNC_CLIENT_PORT};
+    server_name _;
+
+    root /app/dist;
+    index index.html;
+
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log;
+
+    location ${BREWSYNC_API_ENDPOINT} {
+        proxy_pass ${BREWSYNC_API_URL};
+        proxy_redirect off;
+        proxy_buffering off;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    /** Tool API — /tool/... 만 백엔드로 (/toolmanagement SPA 는 location / fallback) */
+    location ~ ^/tool/ {
+        proxy_pass ${BREWSYNC_API_URL};
+        proxy_redirect off;
+        proxy_buffering off;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    location /secret {
+        proxy_pass ${BREWSYNC_API_URL};
+        proxy_redirect off;
+        proxy_buffering off;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    # Admin settings API — /admin/auth|code|user|org/* (SPA /admin/settings 는 location / fallback)
+    location ~ ^/admin/(auth|code|user|org)/ {
+        proxy_pass ${BREWSYNC_API_URL};
+        proxy_redirect off;
+        proxy_buffering off;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    # SPA 라우팅을 위한 fallback
+    location / {
+        root /app/dist;
+        index index.html index.htm;
+        try_files $uri $uri/ /index.html;
+    }
+
+    gzip on;
+    gzip_types text/plain text/css application/javascript application/json image/svg+xml;
+    gzip_min_length 1024;
+}

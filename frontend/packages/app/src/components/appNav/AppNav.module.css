@@ -1,0 +1,108 @@
+/* ──────────────────────────────────────────────────────────
+   AppNav — ④ 권장안 Icon Rail (design-tokens)
+   ────────────────────────────────────────────────────────── */
+
+.root {
+    background-color: transparent;
+    color: var(--sage-nav-text);
+    border-radius: 6px;
+    margin: 1px 8px;
+    font-family: "Noto Sans KR", sans-serif;
+    transition: background-color 120ms ease, color 120ms ease;
+    position: relative;
+
+    &:hover {
+        background-color: var(--sage-nav-bg-hover);
+        color: var(--sage-nav-text-hover);
+    }
+
+    &[data-active] {
+        background-color: var(--sage-nav-bg-active);
+        color: var(--sage-nav-text-active);
+        font-weight: 600;
+
+        &::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 8px;
+            bottom: 8px;
+            width: 3px;
+            border-radius: 2px;
+            background: var(--sage-nav-active-indicator);
+        }
+
+        &:hover {
+            background-color: var(--sage-nav-bg-active);
+            color: var(--sage-nav-text-active);
+        }
+    }
+}
+
+.rootCompact {
+    justify-content: center;
+    padding-inline: 0;
+    margin-inline: 4px;
+}
+
+.label {
+    font-size: 14px;
+    line-height: 1.25;
+    letter-spacing: 0.01em;
+    font-family: "Noto Sans KR", sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.labelHidden {
+    display: none;
+}
+
+.section {
+    background-color: transparent;
+    color: inherit;
+    opacity: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+}
+
+.sectionCompact {
+    margin-inline: 0;
+}
+
+.bodyCompact {
+    flex: 0 0 auto;
+    justify-content: center;
+}
+
+.sectionLabel {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--sage-nav-text);
+    padding: 12px 16px 4px;
+    user-select: none;
+    pointer-events: none;
+    line-height: 1;
+    font-family: "Noto Sans KR", sans-serif;
+    white-space: nowrap;
+}
+
+.sectionLabelHidden {
+    display: none;
+}
+
+/* 중첩 NavLink chevron — Rail compact 시 숨김 */
+.chevronHidden {
+    display: none;
+}
+
+.childrenCompact {
+    display: none;
+}
+

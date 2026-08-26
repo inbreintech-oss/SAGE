@@ -1,0 +1,531 @@
+/* ── Report canvas (A4, borderless, continuous flow) ───────────── */
+
+.root {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0;
+    background: transparent;
+    color: #1e293b;
+}
+
+.pageCanvas {
+    width: 210mm;
+    min-width: 210mm;
+    margin: 0 auto;
+    padding: 10mm 11mm 12mm;
+    background: #ffffff;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    box-sizing: border-box;
+    font-size: 10.5pt;
+    line-height: 1.6;
+}
+
+.docMeta {
+    padding-bottom: 10px;
+    margin-bottom: 14px;
+}
+
+.docTitle {
+    font-size: 1.55rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+}
+
+.blocks {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.blockShell {
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+}
+
+.rowsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.colsContainer {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+@media (min-width: 768px) {
+    .colsContainer {
+        grid-template-columns: 1.55fr 1fr;
+        align-items: start;
+    }
+}
+
+/* ── Headers ───────────────────────────────────────────────────── */
+
+.headerBlock {
+    padding: 0;
+    margin: 0;
+}
+
+.headerTitle {
+    color: #0f172a;
+    line-height: 1.25;
+    margin: 0;
+}
+
+.typeDocumentTitle {
+    margin-bottom: 6px;
+    padding-bottom: 10px;
+}
+
+.typeDocumentTitle .headerTitle {
+    font-size: 1.65rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+}
+
+.typeSectionTitle {
+    margin-top: 22px;
+    margin-bottom: 10px;
+    padding: 0;
+}
+
+.typeSectionTitle .headerTitle {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1e3a5f;
+    letter-spacing: -0.01em;
+}
+
+/* ── Cards by type (no borders — tint + typography) ────────────── */
+
+.cardBlock {
+    padding: 14px 2px;
+    margin: 0;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+}
+
+.cardTitle {
+    margin: 0 0 8px;
+    line-height: 1.35;
+}
+
+.typeSummaryCard {
+    padding: 16px 4px 18px;
+    background: linear-gradient(180deg, #f8fafc 0%, rgba(248, 250, 252, 0) 88%);
+}
+
+.typeSummaryCard .cardTitle {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #64748b;
+}
+
+.typeInsightCard {
+    padding: 10px 4px 14px 12px;
+    background: #fafbfc;
+    margin-top: -4px;
+    margin-bottom: 6px;
+}
+
+.typeInsightCard .cardTitle {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #475569;
+}
+
+.roleChartInsight.typeInsightCard,
+.roleTableInsight.typeInsightCard {
+    background: #f8fafc;
+}
+
+.typeClosingCard {
+    margin-top: 18px;
+    padding: 18px 4px 8px;
+    background: linear-gradient(180deg, #f1f5f9 0%, rgba(241, 245, 249, 0) 100%);
+}
+
+.typeClosingCard .cardTitle {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.typeKpiCard {
+    padding: 12px 2px;
+}
+
+.typeTextCard {
+    padding: 12px 2px;
+}
+
+.kpiItem {
+    padding: 6px 2px;
+}
+
+.kpiValue {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.15;
+    margin-top: 2px;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ── Markdown (report body) ────────────────────────────────────── */
+
+.markdownBody {
+    font-size: inherit;
+    line-height: 1.65;
+    color: #334155;
+}
+
+.mdH1 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 10px;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+}
+
+.mdH2 {
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 14px 0 8px;
+    line-height: 1.35;
+}
+
+.mdH3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #334155;
+    margin: 12px 0 6px;
+}
+
+.mdH4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #475569;
+    margin: 10px 0 4px;
+}
+
+.mdP {
+    margin: 0 0 10px;
+    line-height: 1.65;
+}
+
+.mdP:last-child {
+    margin-bottom: 0;
+}
+
+.mdUl,
+.mdOl {
+    margin: 6px 0 12px;
+    padding-left: 0;
+    list-style: none;
+}
+
+.mdUl .mdLi,
+.mdOl .mdLi {
+    position: relative;
+    padding: 5px 0 5px 1.15rem;
+    margin: 0;
+    line-height: 1.55;
+}
+
+.mdUl .mdLi::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.72em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #3b82f6;
+}
+
+/* 최상위 ol만 카운터 시작 — 중첩 ol은 각자 scope에서 1·2·3 재시작 */
+.mdOl:not(.mdOl .mdOl) {
+    counter-reset: report-ol;
+}
+
+.mdOl > .mdLi {
+    counter-increment: report-ol;
+    padding-left: 1.5rem;
+}
+
+.mdOl > .mdLi::before {
+    content: counter(report-ol) ".";
+    position: absolute;
+    left: 0;
+    top: 5px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #3b82f6;
+    font-variant-numeric: tabular-nums;
+}
+
+.mdOl .mdOl {
+    counter-reset: report-ol;
+    margin: 4px 0 2px;
+}
+
+.mdOl .mdOl > .mdLi {
+    counter-increment: report-ol;
+    padding-left: 2rem;
+}
+
+.mdOl .mdOl > .mdLi::before {
+    content: counter(report-ol) ".";
+    position: absolute;
+    left: 0;
+    top: 5px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #3b82f6;
+    font-variant-numeric: tabular-nums;
+}
+
+.mdStrong {
+    font-weight: 700 !important;
+    color: #0f172a;
+    font-style: normal;
+}
+
+.mdEm {
+    font-style: italic;
+    color: #475569;
+}
+
+.mdBlockquote {
+    margin: 10px 0;
+    padding: 8px 12px;
+    background: #f8fafc;
+    color: #475569;
+    font-size: 0.92em;
+    border: none;
+    border-radius: 4px;
+}
+
+.mdHr {
+    border: none;
+    height: 1px;
+    background: #e2e8f0;
+    margin: 14px 0;
+}
+
+/* ── Charts ─────────────────────────────────────────────────────── */
+
+.chartBlock {
+    padding: 14px 0 10px;
+    margin: 0;
+    border: none;
+    background: transparent;
+}
+
+.typePrimaryChart {
+    padding-top: 16px;
+}
+
+.typeSecondaryChart {
+    opacity: 0.98;
+}
+
+.chartCaption {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 4px;
+}
+
+.chartSubtitle {
+    font-size: 0.78rem;
+    color: #64748b;
+    margin-bottom: 8px;
+}
+
+.chartInlineInsight {
+    margin-top: 8px;
+    padding-top: 0;
+    font-size: 0.88rem;
+    color: #64748b;
+    border: none;
+}
+
+/* ── Tables ─────────────────────────────────────────────────────── */
+
+.tableBlock {
+    padding: 12px 0;
+    margin: 0;
+    border: none;
+    background: transparent;
+}
+
+.tableCaption {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 8px;
+}
+
+.dataTable {
+    font-size: 0.82rem;
+    border: none !important;
+}
+
+.dataTable :global(thead) {
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.tableHeaderCell {
+    background: transparent !important;
+    font-weight: 700;
+    font-size: 0.75rem;
+    color: #475569;
+    text-transform: none;
+    letter-spacing: 0.01em;
+    padding: 8px 10px !important;
+    border: none !important;
+}
+
+.tableNumericCell {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+}
+
+.typeMetricsTable .dataTable :global(tbody tr:nth-child(even)) {
+    background: #f8fafc;
+}
+
+.typeAppendixTable .dataTable {
+    font-size: 0.78rem;
+}
+
+.typeAppendixTable .tableHeaderCell {
+    color: #64748b;
+}
+
+/* ── data.style variants (borderless) ─────────────────────────── */
+
+.styleVariantEmphasis {
+    background: rgba(239, 246, 255, 0.65) !important;
+}
+
+.styleVariantMuted {
+    opacity: 0.94;
+}
+
+.styleVariantHighlight {
+    background: rgba(255, 251, 235, 0.7) !important;
+}
+
+.styleVariantCallout {
+    background: rgba(240, 253, 244, 0.75) !important;
+}
+
+.styleDensityCompact .cardBlock,
+.styleDensityCompact .chartBlock,
+.styleDensityCompact .tableBlock {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.styleDensitySpacious .cardBlock {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.styleNoBorder {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* ── Theme accents (typography only, no card borders) ───────────── */
+
+.themeAnalyticalStandard .typeDocumentTitle .headerTitle,
+.themeFinancialStandard .typeDocumentTitle .headerTitle {
+    color: #0c4a6e;
+}
+
+.themeAnalyticalStandard .typeSectionTitle .headerTitle,
+.themeFinancialStandard .typeSectionTitle .headerTitle {
+    color: #1d4ed8;
+}
+
+/* ── Misc ─────────────────────────────────────────────────────── */
+
+.unknownPre {
+    margin: 0;
+    font-size: 11px;
+    max-height: 200px;
+    overflow: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.panelEmpty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 180px;
+    padding: 24px;
+}
+
+.panelScroll {
+    flex: 1;
+    min-height: 0;
+    height: 100%;
+    max-height: 100%;
+}
+
+@media print {
+    .pageCanvas {
+        width: 100%;
+        min-width: 0;
+        padding: 8mm 10mm;
+        height: auto !important;
+        overflow: visible !important;
+    }
+
+    .root,
+    .blocks,
+    .rowsContainer,
+    .colsContainer {
+        height: auto !important;
+        overflow: visible !important;
+    }
+
+    .colsContainer {
+        display: block !important;
+    }
+
+    .chartBlock,
+    .tableBlock,
+    .cardBlock {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .panelScroll {
+        height: auto !important;
+        max-height: none !important;
+        overflow: visible !important;
+    }
+}

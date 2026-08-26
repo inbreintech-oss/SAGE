@@ -5,10 +5,15 @@
 | 경로 | 설명 |
 |------|------|
 | [`backend/`](backend/) | SAG-E API 서버 (FastAPI, Python 3.11+) |
+| [`frontend/`](frontend/) | SAG-E Analytics 클라이언트 (React + TypeScript + Vite) |
 
-프론트엔드는 추후 `frontend/` 등으로 추가될 예정입니다.
+**Repository:** [github.com/inbreintech-oss/SAGE](https://github.com/inbreintech-oss/SAGE)
 
-## 빠른 시작 (백엔드)
+---
+
+## 빠른 시작
+
+### Backend
 
 ```bash
 cd backend
@@ -19,4 +24,22 @@ cp .env.example .env       # NARRATIX_HOME 등 수정
 python main.py
 ```
 
-자세한 설명은 [backend/README.md](backend/README.md)를 참고하세요.
+→ http://127.0.0.1:8090/docs
+
+### Frontend
+
+```bash
+cd frontend
+pnpm install
+pnpm run build:datatable
+pnpm run dev:app
+```
+
+→ Backend API (`http://localhost:8090`) 연동
+
+---
+
+## 문서
+
+- [backend/README.md](backend/README.md) — API 서버, Docker DB, 환경 변수
+- [frontend/README.md](frontend/README.md) — UI 개발, 빌드, Docker 배포

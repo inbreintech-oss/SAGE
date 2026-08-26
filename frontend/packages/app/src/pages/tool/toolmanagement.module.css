@@ -1,0 +1,790 @@
+/* ═══════════════════════════════════════════════════════════════════
+   ToolManagement — Master-Detail Workspace (DataManagement 마스터 기준)
+   ═══════════════════════════════════════════════════════════════════ */
+
+.pageStatusBar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.pageStatusTimestamp {
+    font-size: 12px;
+    color: var(--mantine-color-sageSlate-4);
+}
+
+.pipelineStatusDot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #22c55e;
+    margin-right: 5px;
+    box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.25);
+}
+
+.pipelineStatusText {
+    font-size: 12px;
+    color: #16a34a;
+    font-weight: 500;
+}
+
+.workspace {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    align-items: flex-start;
+    width: 100%;
+    transition: gap 300ms ease-in-out;
+}
+
+.workspaceCollapsed {
+    gap: 0;
+}
+
+.leftPanel {
+    width: 32%;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--mantine-color-white);
+    border-radius: 8px;
+    box-shadow:
+        0 1px 4px 0 rgba(15, 23, 42, 0.08),
+        0 2px 10px 0 rgba(15, 23, 42, 0.06);
+    transition: width 300ms ease-in-out, opacity 300ms ease-in-out;
+    overflow: hidden;
+}
+
+.leftPanelCollapsed {
+    width: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.rightColumn {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    transition: flex 300ms ease-in-out;
+}
+
+.rightFormPanel,
+.consolePanel,
+.previewPanel {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--mantine-color-white);
+    border-radius: 8px;
+    box-shadow:
+        0 1px 4px 0 rgba(15, 23, 42, 0.08),
+        0 2px 10px 0 rgba(15, 23, 42, 0.06);
+    overflow: hidden;
+}
+
+.panelHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    background-color: rgba(248, 250, 252, 0.7);
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--sage-border-color);
+    min-height: 68px;
+    gap: 8px;
+}
+
+.collapseBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    border: none;
+    background: transparent;
+    color: #94a3b8;
+    cursor: pointer;
+    transition: color 150ms ease;
+}
+
+.collapseBtn:hover {
+    color: #475569;
+}
+
+.expandBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    border: none;
+    background: transparent;
+    color: #2563eb;
+    cursor: pointer;
+    transition: color 150ms ease;
+}
+
+.expandBtn:hover {
+    color: #1d4ed8;
+}
+
+.panelHeaderTitle {
+    font-size: 12px;
+    font-weight: 700;
+    color: #333333;
+}
+
+.searchBar {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--sage-border-color);
+    background-color: var(--mantine-color-sageSlate-0);
+}
+
+.fieldLabel {
+    font-size: 12px;
+    font-weight: 700;
+    color: #333333;
+    margin-bottom: 6px;
+}
+
+.formFieldLabelRow {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 6px;
+    min-width: 0;
+}
+
+.formFieldLabelRow .fieldLabel {
+    margin-bottom: 0;
+    flex-shrink: 0;
+}
+
+.placeholderInput :global(input::placeholder),
+.placeholderInput :global(textarea::placeholder) {
+    font-size: 12px !important;
+    font-weight: 400;
+    font-family: "Noto Sans KR", sans-serif !important;
+    color: #94a3b8;
+}
+
+/* 도구명·도구설명 등 — 검색창 플레이스홀더와 동일 스펙(12px / Noto Sans KR / #333333) */
+.formFieldInput :global(input),
+.formFieldInput :global(textarea) {
+    font-size: 12px !important;
+    font-weight: 400 !important;
+    font-family: "Noto Sans KR", sans-serif !important;
+    color: #333333 !important;
+}
+
+.paramFieldInput :global(input) {
+    font-size: 12px !important;
+    font-weight: 400 !important;
+    font-family: "Noto Sans KR", sans-serif !important;
+    color: #333333 !important;
+}
+
+.paramFieldInput :global(input::placeholder) {
+    font-size: 12px !important;
+    font-weight: 400 !important;
+    font-family: "Noto Sans KR", sans-serif !important;
+}
+
+.toolListItem {
+    padding: 16px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--mantine-color-sageSlate-1);
+    transition: background-color 80ms ease, border-color 80ms ease;
+    user-select: none;
+    position: relative;
+    border-left: 4px solid #F1F5F9;
+    background-color: #ffffff;
+}
+
+.toolListItem:hover {
+    background-color: var(--mantine-color-sageSlate-0);
+}
+
+.toolListItemActive {
+    padding: 16px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--mantine-color-sageSlate-1);
+    transition: background-color 80ms ease, border-color 80ms ease;
+    user-select: none;
+    position: relative;
+    border-left: 4px solid #2563EB;
+    background-color: rgba(239, 246, 255, 0.7);
+}
+
+.toolItemTitleRow {
+    margin-bottom: 3px;
+}
+
+.toolItemTitle {
+    font-size: 12px;
+    font-weight: 700;
+    color: #333333;
+    line-height: 1.4;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+.toolItemIdRow {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0 0 5px;
+}
+
+.toolItemId {
+    font-size: 9px;
+    font-weight: 400;
+    color: #333333;
+    line-height: 1.3;
+    font-family: "Noto Sans KR", sans-serif;
+    word-break: break-all;
+}
+
+.statusBadgeGenerated {
+    font-size: 8px;
+    font-weight: 700;
+    padding: 1px 4px;
+    border-radius: 3px;
+    background-color: #e0e7ff;
+    color: #4338ca;
+    white-space: nowrap;
+}
+
+.statusBadgeAssetized {
+    font-size: 8px;
+    font-weight: 700;
+    padding: 1px 4px;
+    border-radius: 3px;
+    background-color: #d1fae5;
+    color: #047857;
+    white-space: nowrap;
+}
+
+.providerRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 1rem;
+    align-items: start;
+}
+
+@media (max-width: 48em) {
+    .providerRow {
+        grid-template-columns: 1fr;
+    }
+}
+
+.providerRowField {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.providerRowLabel {
+    font-size: 12px;
+    font-weight: 700;
+    color: #333333;
+    min-height: 32px;
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 6px;
+    line-height: 1.35;
+}
+
+.providerRowHint {
+    margin-top: 6px;
+}
+
+.tokenToolHint {
+    margin-top: 4px;
+    font-size: 11px;
+    line-height: 1.45;
+    color: #b45309;
+}
+
+.tokenToolHintMuted {
+    margin-top: 4px;
+    font-size: 11px;
+    line-height: 1.45;
+    color: #6b7280;
+}
+
+.tokenExecErrorPanel {
+    border: 1px solid #fcd34d;
+    background-color: #fffbeb;
+    border-radius: 6px;
+    padding: 10px 12px;
+    max-width: 100%;
+}
+
+.tokenExecErrorTitle {
+    font-size: 12px;
+    font-weight: 700;
+    color: #b45309;
+    margin-bottom: 4px;
+}
+
+.tokenExecErrorDesc {
+    font-size: 11px;
+    line-height: 1.5;
+    color: #92400e;
+    white-space: pre-wrap;
+}
+
+.providerFieldWrap {
+    max-width: 28rem;
+}
+
+.toolItemDesc {
+    font-size: 12px;
+    font-weight: 400;
+    color: #333333;
+    line-height: 1.4;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    margin: 0 0 6px;
+}
+
+.categoryBadgeDefault {
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background-color: #EFF6FF;
+    color: #1D4ED8;
+    border: 1px solid #EFF6FF;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.categoryBadgeActive {
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background-color: #FFFBEB;
+    color: #B45309;
+    border: 1px solid #FFFBEB;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.keywordBadge {
+    font-size: 9px;
+    font-weight: 500;
+    font-family: "Noto Sans KR", sans-serif;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background-color: #f1f5f9;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+    white-space: nowrap;
+    display: inline-block;
+}
+
+.keywordTagsRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 6px;
+}
+
+.emptyPlaceholderCard {
+    min-height: 113px;
+    padding: 10px 14px;
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--mantine-color-sageSlate-1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.emptyPlaceholderIcon {
+    color: #1C7ED6;
+    flex-shrink: 0;
+}
+
+.emptyPlaceholderText {
+    font-size: 12px;
+    color: #1C7ED6;
+    text-align: center;
+}
+
+.formBody {
+    padding: 12px 16px 16px;
+}
+
+.formFooter {
+    display: none;
+}
+
+.consoleHeader {
+    padding: 20px;
+    border-bottom: 1px solid var(--sage-border-color);
+    background-color: rgba(248, 250, 252, 0.7);
+}
+
+.consoleBody {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    padding: 24px;
+    background-color: #0f172a;
+    border-top: 1px solid #1e293b;
+    min-height: 220px;
+    position: relative;
+}
+
+.consoleTraceColumn {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.consoleJsonColumn {
+    width: 45%;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.consoleSubHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #1e293b;
+    padding-bottom: 6px;
+}
+
+.consoleSubLabel {
+    font-size: 10px;
+    color: #94a3b8;
+    font-family: var(--sage-font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.consoleStatusReady {
+    font-size: 9px;
+    font-family: var(--sage-font-mono);
+    color: #34d399;
+}
+
+.consoleStatusRunning {
+    font-size: 9px;
+    font-family: var(--sage-font-mono);
+    color: #facc15;
+}
+
+.consoleStatusSuccess {
+    font-size: 9px;
+    font-family: var(--sage-font-mono);
+    color: #34d399;
+}
+
+.consoleScrollArea {
+    font-family: var(--sage-font-mono);
+}
+
+.consoleTraceArea {
+    font-family: var(--sage-font-mono);
+    font-size: 10px;
+    line-height: 1.5;
+    color: #cbd5e1;
+}
+
+.traceLogLine {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    word-break: break-word;
+}
+
+.jsonPreviewContent {
+    margin: 0;
+    font-family: var(--sage-font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    color: #34d399;
+    white-space: pre-wrap;
+    line-height: 1.5;
+}
+
+.traceLineMuted {
+    color: #64748b;
+}
+
+.traceLineInfo {
+    color: #94a3b8;
+}
+
+.traceLineWarn {
+    color: #facc15;
+}
+
+.traceLineSuccess {
+    color: #34d399;
+}
+
+.traceLineSystem {
+    color: #60a5fa;
+}
+
+.previewPanelHeader {
+    padding: 20px 20px 4px;
+    background-color: rgba(248, 250, 252, 0.7);
+    border-bottom: 0;
+}
+
+.previewDashboard {
+    background-color: rgba(248, 250, 252, 0.7);
+}
+
+.previewQuerySection {
+    padding: 0 20px 12px;
+    background-color: transparent;
+    border-bottom: 0;
+}
+
+.previewVisualBody {
+    padding: 12px 24px 24px;
+    min-height: 220px;
+    border-top: 0;
+    background-color: transparent;
+}
+
+.headerActions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.lifecycleBadge {
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background-color: #dbeafe;
+    color: #1d4ed8;
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+.lifecycleBadgeAssetized {
+    background-color: #d1fae5;
+    color: #047857;
+}
+
+.fieldError {
+    border-color: var(--mantine-color-red-5) !important;
+}
+
+.codeEditorWrap {
+    border: 1px solid var(--mantine-color-sageSlate-2);
+    border-radius: 8px;
+    overflow: hidden;
+    background: #0f172a;
+}
+
+.codeEditorTab {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 12px;
+    background: #020617;
+    border-bottom: 1px solid #1e293b;
+    font-size: 11px;
+    color: #94a3b8;
+    font-family: var(--sage-font-mono);
+}
+
+.codeTextarea :global(textarea) {
+    background: transparent !important;
+    color: #ffffff !important;
+    border: none !important;
+    font-family: var(--sage-font-mono) !important;
+    font-size: 12px !important;
+    line-height: 1.6 !important;
+    overflow: hidden !important;
+    resize: none !important;
+}
+
+.execHeader {
+    display: none;
+}
+
+.execGrid {
+    display: none;
+}
+
+.execSubTitle {
+    font-size: 10px;
+    font-weight: 700;
+    color: #64748b;
+}
+
+.execGrid {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: 16px;
+    padding: 16px;
+    min-height: 350px;
+    position: relative;
+    align-items: stretch;
+}
+
+.execColumn {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.rawConsole {
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    padding: 12px;
+    flex: 1;
+    min-height: 250px;
+    overflow-y: auto;
+    font-family: var(--sage-font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    color: #34d399;
+    white-space: pre-wrap;
+    line-height: 1.5;
+}
+
+.visualPanelColumn {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.visualPanelTitle {
+    font-size: 12px;
+    font-weight: 700;
+    font-family: "Noto Sans KR", sans-serif;
+    color: #333333;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+    margin-bottom: 6px;
+}
+
+.visualPanelBox {
+    border: 1px solid var(--mantine-color-sageSlate-2);
+    border-radius: 8px;
+    background: #f8fafc;
+    flex: 1;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.visualPanelBody {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    text-align: center;
+    min-height: 0;
+}
+
+.execGuideIcon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #e2e8f0;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+    flex-shrink: 0;
+}
+
+.visualFallbackTitle {
+    font-size: 12px;
+    font-weight: 700;
+    font-family: "Noto Sans KR", sans-serif;
+    color: #333333;
+    margin-bottom: 4px;
+}
+
+.visualFallbackDesc {
+    font-size: 10px;
+    font-weight: 400;
+    font-family: "Noto Sans KR", sans-serif;
+    color: #94a3b8;
+    max-width: 320px;
+    line-height: 1.5;
+}
+
+.resultTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.resultTable th {
+    font-size: 14px;
+    font-weight: 700;
+    color: #333333;
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--mantine-color-sageSlate-2);
+    background: #fff;
+}
+
+.resultTable td {
+    font-size: 12px;
+    color: #333333;
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--mantine-color-sageSlate-1);
+}
+
+.paramLabel {
+    font-size: 12px;
+    font-weight: 700;
+    color: #333333;
+    padding: 0 8px;
+    white-space: nowrap;
+}
+
+.execLoader {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    z-index: 10;
+}
+
+.listScroll {
+    max-height: 720px;
+    overflow-y: auto;
+}

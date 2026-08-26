@@ -1,0 +1,269 @@
+{
+  "$metadata": {
+    "tokenSetOrder": ["global", "color", "spacing", "radius", "layout", "typography", "shadow"],
+    "collection": "SAG-E / Workspace Tabs",
+    "description": "③ Workspace Tabs — Top Tab Navigation + Context Panel. Import via Tokens Studio for Figma."
+  },
+  "global": {
+    "font-family": {
+      "$type": "fontFamily",
+      "$value": "Noto Sans KR"
+    },
+    "font-family-mono": {
+      "$type": "fontFamily",
+      "$value": "Fira Code"
+    },
+    "grid-base": {
+      "$type": "dimension",
+      "$value": "4px"
+    }
+  },
+  "color": {
+    "surface": {
+      "app-header": { "$type": "color", "$value": "#FFFFFF" },
+      "page": { "$type": "color", "$value": "#F0F4F8" },
+      "card": { "$type": "color", "$value": "#FFFFFF" },
+      "tab-active": { "$type": "color", "$value": "#EFF6FF" },
+      "tab-hover": { "$type": "color", "$value": "#F8FAFC" },
+      "context-panel": { "$type": "color", "$value": "#FFFFFF" },
+      "toolbar": { "$type": "color", "$value": "#FFFFFF" },
+      "hero-gradient-start": { "$type": "color", "$value": "#EFF6FF" },
+      "hero-gradient-end": { "$type": "color", "$value": "#F8FAFC" }
+    },
+    "border": {
+      "default": { "$type": "color", "$value": "#E2E8F0" },
+      "tab-indicator": { "$type": "color", "$value": "#2563EB" },
+      "card": { "$type": "color", "$value": "#E2E8F0" }
+    },
+    "text": {
+      "primary": { "$type": "color", "$value": "#0F172A" },
+      "secondary": { "$type": "color", "$value": "#64748B" },
+      "tab-default": { "$type": "color", "$value": "#64748B" },
+      "tab-active": { "$type": "color", "$value": "#2563EB" },
+      "kpi-value": { "$type": "color", "$value": "#0F172A" },
+      "kpi-delta-up": { "$type": "color", "$value": "#059669" },
+      "kpi-delta-down": { "$type": "color", "$value": "#DC2626" }
+    },
+    "brand": {
+      "primary": { "$type": "color", "$value": "#2563EB" },
+      "primary-hover": { "$type": "color", "$value": "#1D4ED8" },
+      "secondary": { "$type": "color", "$value": "#0090DA" },
+      "accent-purple": { "$type": "color", "$value": "#7C3AED" },
+      "accent-cyan": { "$type": "color", "$value": "#06B6D4" }
+    },
+    "chart": {
+      "series-1": { "$type": "color", "$value": "#2563EB" },
+      "series-2": { "$type": "color", "$value": "#7C3AED" },
+      "series-3": { "$type": "color", "$value": "#06B6D4" },
+      "series-4": { "$type": "color", "$value": "#F59E0B" }
+    },
+    "semantic": {
+      "success": { "$type": "color", "$value": "#059669" },
+      "warning": { "$type": "color", "$value": "#F59E0B" },
+      "error": { "$type": "color", "$value": "#DC2626" },
+      "info": { "$type": "color", "$value": "#2563EB" }
+    }
+  },
+  "spacing": {
+    "1": { "$type": "dimension", "$value": "4px" },
+    "2": { "$type": "dimension", "$value": "8px" },
+    "3": { "$type": "dimension", "$value": "12px" },
+    "4": { "$type": "dimension", "$value": "16px" },
+    "5": { "$type": "dimension", "$value": "20px" },
+    "6": { "$type": "dimension", "$value": "24px" },
+    "8": { "$type": "dimension", "$value": "32px" }
+  },
+  "radius": {
+    "sm": { "$type": "dimension", "$value": "8px" },
+    "md": { "$type": "dimension", "$value": "10px" },
+    "lg": { "$type": "dimension", "$value": "12px" },
+    "full": { "$type": "dimension", "$value": "9999px" }
+  },
+  "layout": {
+    "frame-width": { "$type": "dimension", "$value": "1440px" },
+    "frame-height": { "$type": "dimension", "$value": "900px" },
+    "app-header-height": { "$type": "dimension", "$value": "52px" },
+    "page-toolbar-height": { "$type": "dimension", "$value": "52px" },
+    "context-panel-width": { "$type": "dimension", "$value": "320px" },
+    "grid-columns": { "$type": "number", "$value": 12 },
+    "grid-gutter": { "$type": "dimension", "$value": "24px" },
+    "grid-margin": { "$type": "dimension", "$value": "32px" },
+    "logo-zone-width": { "$type": "dimension", "$value": "180px" },
+    "kpi-card-min-width": { "$type": "dimension", "$value": "240px" },
+    "kpi-card-height": { "$type": "dimension", "$value": "120px" },
+    "chart-min-height": { "$type": "dimension", "$value": "280px" }
+  },
+  "typography": {
+    "h1": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{global.font-family}",
+        "fontSize": "28px",
+        "fontWeight": 700,
+        "lineHeight": "36px"
+      }
+    },
+    "h2": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{global.font-family}",
+        "fontSize": "20px",
+        "fontWeight": 600,
+        "lineHeight": "28px"
+      }
+    },
+    "h3": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{global.font-family}",
+        "fontSize": "16px",
+        "fontWeight": 600,
+        "lineHeight": "24px"
+      }
+    },
+    "tab": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{global.font-family}",
+        "fontSize": "14px",
+        "fontWeight": 500,
+        "lineHeight": "20px"
+      }
+    },
+    "body-m": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{global.font-family}",
+        "fontSize": "14px",
+        "fontWeight": 400,
+        "lineHeight": "22px"
+      }
+    },
+    "breadcrumb": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{global.font-family}",
+        "fontSize": "14px",
+        "fontWeight": 400,
+        "lineHeight": "20px"
+      }
+    },
+    "kpi-value": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{global.font-family}",
+        "fontSize": "32px",
+        "fontWeight": 700,
+        "lineHeight": "40px"
+      }
+    },
+    "kpi-label": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{global.font-family}",
+        "fontSize": "13px",
+        "fontWeight": 500,
+        "lineHeight": "18px"
+      }
+    },
+    "kpi-delta": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{global.font-family}",
+        "fontSize": "12px",
+        "fontWeight": 600,
+        "lineHeight": "16px"
+      }
+    }
+  },
+  "shadow": {
+    "header": {
+      "$type": "shadow",
+      "$value": {
+        "color": "#E2E8F0",
+        "offsetX": "0px",
+        "offsetY": "1px",
+        "blur": "0px",
+        "spread": "0px"
+      }
+    },
+    "card": {
+      "$type": "shadow",
+      "$value": {
+        "color": "rgba(15, 23, 42, 0.06)",
+        "offsetX": "0px",
+        "offsetY": "1px",
+        "blur": "3px",
+        "spread": "0px"
+      }
+    },
+    "card-hover": {
+      "$type": "shadow",
+      "$value": {
+        "color": "rgba(15, 23, 42, 0.10)",
+        "offsetX": "0px",
+        "offsetY": "8px",
+        "blur": "24px",
+        "spread": "0px"
+      }
+    },
+    "context-panel": {
+      "$type": "shadow",
+      "$value": {
+        "color": "rgba(15, 23, 42, 0.08)",
+        "offsetX": "-4px",
+        "offsetY": "0px",
+        "blur": "24px",
+        "spread": "0px"
+      }
+    },
+    "fab": {
+      "$type": "shadow",
+      "$value": {
+        "color": "rgba(37, 99, 235, 0.35)",
+        "offsetX": "0px",
+        "offsetY": "4px",
+        "blur": "14px",
+        "spread": "0px"
+      }
+    },
+    "focus-blue": {
+      "$type": "shadow",
+      "$value": {
+        "color": "rgba(37, 99, 235, 0.25)",
+        "offsetX": "0px",
+        "offsetY": "0px",
+        "blur": "0px",
+        "spread": "3px"
+      }
+    }
+  },
+  "component": {
+    "tab-item": {
+      "height": { "$type": "dimension", "$value": "36px" },
+      "padding-x": { "$type": "dimension", "$value": "16px" },
+      "radius": { "$type": "dimension", "$value": "{radius.sm}" },
+      "indicator-height": { "$type": "dimension", "$value": "2px" },
+      "transition-duration": { "$type": "duration", "$value": "200ms" }
+    },
+    "button-primary": {
+      "height": { "$type": "dimension", "$value": "40px" },
+      "radius": { "$type": "dimension", "$value": "{radius.md}" },
+      "padding-x": { "$type": "dimension", "$value": "20px" }
+    },
+    "kpi-card": {
+      "radius": { "$type": "dimension", "$value": "{radius.lg}" },
+      "padding": { "$type": "dimension", "$value": "{spacing.5}" },
+      "sparkline-height": { "$type": "dimension", "$value": "32px" }
+    },
+    "fab": {
+      "size": { "$type": "dimension", "$value": "56px" },
+      "icon-size": { "$type": "dimension", "$value": "24px" },
+      "offset": { "$type": "dimension", "$value": "32px" }
+    },
+    "context-panel": {
+      "header-height": { "$type": "dimension", "$value": "56px" },
+      "slide-duration": { "$type": "duration", "$value": "250ms" }
+    }
+  }
+}

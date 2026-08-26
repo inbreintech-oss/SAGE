@@ -1,0 +1,421 @@
+﻿{
+  "pages": {
+    "auth": {
+      "login": {
+      },
+      "findAccount": {
+        "labels": {
+          "title": "내 계정 찾기",
+          "firstName": "이름",
+          "lastName": "성",
+          "email": "E-Mail",
+          "search": "검색",
+          "login": "Login"
+        },
+        "messages": {
+          "id-found": "{{firstName}} {{lastName}}님의 ID는 \"{{id}}\" 입니다.",
+          "id-not-found": "존재하지 않는 계정입니다."
+        }
+      },
+      "resetPassword": {
+        "labels": {
+          "title": "비밀번호 재설정",
+          "firstName": "이름",
+          "lastName": "성",
+          "id": "ID",
+          "reset": "메일발송",
+          "login": "Login"
+        },
+        "messages": {
+          "id-not-found": "존재하지 않는 계정입니다.",
+          "email-sent": "임시 비밀번호를 등록된 메일로 발송했습니다."
+        }
+      },
+      "selectAuthor": {
+        "labels": {
+          "company-app": "App.",
+          "author": "권한"
+        },
+        "messages": {
+        }
+      }
+    },
+    "user": {
+      "company": {
+        "labels": {
+          "search-label": "회사명"
+        },
+        "messages": {
+          "company-update-success": "회사 정보가 수정되었습니다."
+        },
+        "add-modal": {
+          "labels": {
+            "title": "회사 등록"
+          },
+          "validations": {
+            "endDate-is-earlier": "적용 종료일은 적용 시작일 이후여야 합니다.",
+            "startDate-is-later": "적용 시작일은 적용 종료일 이전이여야 합니다.",
+            "startDate-endDate-is-not-pair": "적용일자는 시작일과 종료일이 둘 다 존재해야 합니다."
+          }
+        }
+      },
+      "user": {
+        "labels": {
+          "search": "ID/이름",
+          "href-bulk-add": "일괄등록"
+        },
+        "messages": {},
+        "user-manage-modal": {
+          "labels": {
+            "create-user": "신규 사용자 등록",
+            "edit-user": "사용자 정보 수정",
+            "id": "ID",
+            "email": "이메일",
+            "password": "비밀번호",
+            "password-confirm": "비밀번호 확인",
+            "first-name": "이름 (First Name)",
+            "last-name": "성 (Last Name)",
+            "company": "회사",
+            "use-yn": "사용여부",
+            "language-code": "사용 언어",
+            "add-company": "회사 등록"
+          },
+          "validations": {
+            "need-check-id-duplicated": "ID 중복 체크를 해야합니다.",
+            "id-duplicated": "이미 존재하는 ID 입니다.",
+            "id-ok": "사용 가능한 ID 입니다.",
+            "password-mismatch": "비밀번호가 일치하지 않습니다.",
+            "wrong-email-format": "이메일 형식이 올바르지 않습니다."
+          }
+        }
+      },
+      "bulkAdd": {
+        "labels": {
+          "file": "파일",
+          "validate-file": "오류체크"
+        },
+        "messages": {
+          "upload-confirm": "업로드 된 {{count}}건의 사용자 정보를 모두 추가합니까?"
+        }
+      },
+      "userAuthorityRole": {
+        "labels": {
+          "search-label": "사용자 ID/이름"
+        }
+      }
+    },
+    "role": {
+      "authority": {
+        "labels": {
+          "search-text": "권한명"
+        },
+        "author-create-modal": {
+          "labels": {
+            "title": "신규 권한",
+            "authorName": "권한명"
+          }
+        }
+      },
+
+      "role": {
+        "labels": {
+          "search-text": "역할명"
+        },
+        "role-create-modal": {
+          "labels": {
+            "title": "신규 역할",
+            "roleName": "역할명"
+          }
+        }
+      }
+    },
+    "system": {
+      "app": {
+        "labels": {
+          "search-text": "App.명"
+        },
+        "app-create-modal": {
+          "labels": {
+            "appName": "App.명",
+            "description": "Description"
+          }
+        }
+      },
+      "code": {
+        "labels": {
+          "search-text": "그룹코드(명)"
+        },
+        "code-group-create-modal": {
+          "labels": {
+            "title": "그룹코드추가",
+            "codeGroupId": "그룹코드ID",
+            "korCodeGroupName": "그룹코드명(한국어)",
+            "engCodeGroupName": "그룹코드명(영어)",
+            "chiCodeGroupName": "그룹코드명(중국어)",
+            "vieCodeGroupName": "그룹코드명(베트남어)",
+            "jpnCodeGroupName": "그룹코드명(일본어)",
+            "description": "설명",
+            "useYn": "사용여부"
+          }
+        },
+        "code-detail-create-modal": {
+          "labels": {
+            "title": "코드추가",
+            "codeId": "코드ID",
+            "korCodeName": "코드명(한국어)",
+            "engCodeName": "코드명(영어)",
+            "chiCodeName": "코드명(중국어)",
+            "vieCodeName": "코드명(베트남어)",
+            "jpnCodeName": "코드명(일본어)",
+            "option1": "옵션1",
+            "option2": "옵션2",
+            "option3": "옵션3",
+            "option4": "옵션4",
+            "option5": "옵션5",
+            "displayOrder": "정렬순서",
+            "useYn": "사용여부",
+            "description": "설명"
+          }
+        }
+      },
+      "codeHelp": {
+        "labels": {
+          "search-text": "그룹헬프"
+        },
+        "code-help-create-modal": {
+          "labels": {
+            "title": "그룹헬프 추가",
+            "codeHelpId": "CodeHelp ID",
+            "commandType": "Command Type",
+            "commandText": "Command Text",
+            "codeColumnId": "CodeColumn ID",
+            "valueColumnId": "ValueColumn ID",
+            "description": "Description",
+            "useYn": "사용여부"
+          }
+        }
+      },
+      "control": {
+        "labels": {
+          "search-text": "컨트롤명"
+        },
+        "control-create-modal": {
+          "labels": {
+            "title": "컨트롤 추가",
+            "controlType": "컨트롤 유형",
+            "korControlName": "컨트롤명(KOR)",
+            "engControlName": "컨트롤명(ENG)",
+            "chiControlName": "컨트롤명(CHI)",
+            "vieControlName": "컨트롤명(VIE)",
+            "jpnControlName": "컨트롤명(JPN)",
+            "displayOrder": "순서",
+            "useYn": "사용여부",
+            "createdAt": "생성일자",
+            "updatedAt": "수정일자"
+          }
+        }
+      },
+      "menu": {
+        "labels": {
+          "search-text": "메뉴명",
+          "parentMenuName": "부모메뉴명",
+          "korMenuName": "메뉴명(KOR)",
+          "engMenuName": "메뉴명(ENG)",
+          "chiMenuName": "메뉴명(CHI)",
+          "vieMenuName": "메뉴명(VIE)",
+          "jpnMenuName": "메뉴명(JPN)",
+          "displayOrder": "표시순서",
+          "url": "메뉴경로",
+          "useYn": "사용여부",
+          "createdBy": "등록자",
+          "createdAt": "등록일",
+          "updatedBy": "수정자",
+          "updatedAt": "수정일"
+        }
+      },
+      "localization": {
+        "label": {
+          "labels": {
+            "search-text": "라벨명"
+          },
+          "label-create-modal": {
+            "labels": {
+              "title": "라벨 추가",
+              "labelId": "ID",
+              "korLabelName": "라벨명(KOR)",
+              "engLabelName": "라벨명(ENG)",
+              "chiLabelName": "라벨명(CHI)",
+              "vieLabelName": "라벨명(VIE)",
+              "jpnLabelName": "라벨명(JPN)",
+              "korToolTip": "ToolTip(KOR)",
+              "engToolTip": "ToolTip(ENG)",
+              "chiToolTip": "ToolTip(CHI)",
+              "vieToolTip": "ToolTip(VIE)",
+              "jpnToolTip": "ToolTip(JPN)",
+              "description": "상세설명",
+              "useYn": "사용여부"
+            }
+          }
+        },
+        "message": {
+          "labels": {
+            "search-text": "타이틀/메시지"
+          },
+          "message-create-modal": {
+            "labels": {
+              "title": "메시지 추가",
+              "messageId": "ID",
+              "korUiTitle": "타이틀(KOR)",
+              "engUiTitle": "타이틀(ENG)",
+              "chiUiTitle": "타이틀(CHI)",
+              "vieUiTitle": "타이틀(VIE)",
+              "jpnUiTitle": "타이틀(JPN)",
+              "korMessage": "메시지(KOR)",
+              "engMessage": "메시지(ENG)",
+              "chiMessage": "메시지(CHI)",
+              "vieMessage": "메시지(VIE)",
+              "jpnMessage": "메시지(JPN)",
+              "description": "상세설명",
+              "useYn": "사용여부"
+            }
+          }
+        }
+      },
+      "log": {
+        "errorLog": {
+          "labels": {
+            "errorMessage": "Error Message",
+            "startDate": "검색 시작 일자",
+            "endDate": "검색 종료 일자",
+            "userId": "사용자 ID"
+          }
+        },
+        "loginLog": {
+          "labels": {
+            "startDate": "검색 시작 일자",
+            "endDate": "검색 종료 일자",
+            "userId": "사용자 ID"
+          }
+        },
+        "serviceLog": {
+          "labels": {
+            "userAgent": "User Agent",
+            "startDate": "검색 시작 일자",
+            "endDate": "검색 종료 일자",
+            "userId": "사용자 ID"
+          }
+        },
+        "systemLog": {
+          "labels": {
+            "startDate": "검색 시작 일자",
+            "endDate": "검색 종료 일자",
+            "userId": "사용자 ID"
+          }
+        }
+      }
+    }
+  },
+  "models": {
+    "company": {
+      "korCompanyName": "회사명(Kor.)",
+      "engCompanyName": "회사명(Eng.)",
+      "chiCompanyName": "회사명(Chi.)",
+      "vieCompanyName": "회사명(Vie.)",
+      "jpnCompanyName": "회사명(Jpn.)",
+      "startDate": "적용 시작일",
+      "endDate": "적용 종료일",
+      "useYn": "사용 여부"
+    },
+    "user": {
+      "id": "ID",
+      "email": "이메일",
+      "firstName": "이름 (First Name)",
+      "lastName": "성 (Last Name)",
+      "password": "비밀번호",
+      "disabled": "사용 여부",
+      "languageCode": "사용 언어"
+    }
+  },
+  "common": {
+    "labels": {
+      "ok": "확인",
+      "save": "저장",
+      "confirm": "확인",
+      "cancel": "취소",
+      "login": "로그인",
+      "logout": "로그아웃",
+      "load": "조회",
+      "company-app": "App.",
+      "author": "권한",
+      "author-select": "권한 선택",
+      "author-apply": "권한 적용",
+      "duplicate-check": "중복체크",
+      "new": "신규",
+      "insert": "추가",
+      "delete": "삭제",
+      "upload": "업로드",
+      "settings": "설정",
+      "settings-form-id": "ID",
+      "settings-form-email": "이메일",
+      "settings-form-password": "비밀번호",
+      "settings-form-password-new": "새 비밀번호",
+      "settings-form-password-new-confirm": "새 비밀번호 확인",
+      "settings-form-first-name": "이름",
+      "settings-form-last-name": "성",
+      "settings-form-company-id": "회사",
+      "settings-form-language-code": "사용언어",
+      "settings-form-reset-company-id": "회사 해제",
+      "page404-title": "페이지를 찾을 수 없습니다.",
+      "page401-title": "권한이 없습니다.",
+      "return-home": "홈으로 돌아가기",
+      "no-search-result": "검색 결과 없음",
+      "success": "성공"
+    },
+    "messages": {
+      "confirm-save": "입력하신 내용을 저장하시겠습니까?",
+      "confirm-discard-unsaves": "저장하지 않은 수정 사항이 있습니다. 수정한 내용을 취소하고 나가시겠습니까?",
+      "confirm-delete-selected": "선택하신 행을 삭제하시겠습니까?",
+      "delete-success": "선택한 {{count}}개 항목이 삭제되었습니다.",
+      "delete-success-no-count": "선택한 항목이 삭제되었습니다.",
+      "delete-failure": "선택한 항목 삭제에 실패했습니다.",
+      "delete-failure-with-error": "선택한 항목 삭제에 실패했습니다. {{errorMessage}}",
+      "success-saved": "입력하신 내용이 저장되었습니다.",
+      "success-added": "입력하신 {{count}}건이 추가되었습니다.",
+      "success-added-no-count": "입력하신 내용이 추가되었습니다.",
+      "insert-success": "입력하신 항목 {{count}}건이 추가되었습니다.",
+      "insert-success-no-count": "입력하신 항목이 추가되었습니다.",
+      "insert-failure": "입력하신 항목 추가에 실패했습니다.",
+      "insert-failure-with-error": "입력하신 항목 추가에 실패했습니다. {{errorMessage}}",
+      "update-success": "입력하신 항목 {{count}}건이 수정되었습니다.",
+      "update-success-no-count": "입력하신 항목이 수정되었습니다.",
+      "update-failure": "입력하신 항목 수정에 실패했습니다.",
+      "update-failure-with-error": "입력하신 항목 수정에 실패했습니다. {{errorMessage}}",
+      "select-success": "성공적으로 {{count}}건이 조회 되었습니다.",
+      "select-success-no-count": "성공적으로 조회 되었습니다.",
+      "select-failure": "조회에 실패했습니다.",
+      "select-failure-with-error": "조회에 실패했습니다.. {{errorMessage}}",
+      "confirm-logout": "로그아웃 하시겠습니까?",
+      "login-empty-userid": "아이디를 입력해주세요.",
+      "login-empty-password": "비밀번호를 입력해주세요.",
+      "favorite-created": "즐겨찾기에 {{menuName}} 메뉴가 추가되었습니다.",
+      "favorite-deleted": "즐겨찾기에서 {{menuName}} 메뉴가 삭제되었습니다.",
+      "file-not-found": "파일이 없습니다.",
+      "file-validate-success": "파일 검증에 성공했습니다.",
+      "file-validate-failure": "파일 검증에 실패했습니다.",
+      "file-validate-failure-with-error": "파일 검증에 실패했습니다. {{errorMessage}}",
+      "file-load-success": "파일에서 데이터를 {{count}}건 불러왔습니다.",
+      "file-load-success-no-count": "파일에서 데이터를 불러왔습니다.",
+      "file-empty": "파일이 비어있습니다.",
+      "upload-data-empty": "업로드 할 데이터가 없습니다.",
+      "upload-data-invalid": "업로드 할 데이터에 오류가 있습니다. 확인 후 다시 시도해 주세요."
+    },
+    "validations": {
+      "required": "필수 항목입니다.",
+      "password-length": "비밀번호는 최소 8자 이상이어야 합니다.",
+      "password-eng-upper": "비밀번호는 영문 대문자를 포함해야 합니다.",
+      "password-eng-lower": "비밀번호는 영문 소문자를 포함해야 합니다.",
+      "password-number": "비밀번호는 숫자를 포함해야 합니다.",
+      "password-special-char": "비밀번호는 특수문자(!@#$%^&*(),.?\":{}|<>)를 포함해야 합니다."
+    }
+  }
+}

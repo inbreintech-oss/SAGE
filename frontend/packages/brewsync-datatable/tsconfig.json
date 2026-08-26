@@ -1,0 +1,22 @@
+﻿{
+  "include": ["src"],
+  "compilerOptions": {
+    "rootDir": "src",
+    "types": ["node"],
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "jsx": "react-jsx",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "composite": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "declarationDir": "./dist/types",
+    "paths": {
+      "@/*": ["./src/*"],
+    },
+  }
+}

@@ -1,0 +1,252 @@
+/* Report List (2) — 2-Panel Workspace (목록 + 패널 내 미리보기) */
+
+.workspace {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    width: 100%;
+    gap: 16px;
+    transition: gap 300ms ease-in-out;
+    min-height: calc(100vh - 160px);
+}
+
+.workspaceCollapsed {
+    gap: 0;
+}
+
+/* 좌측 목록 — workspace 직속 flex item (퍼센트 기준 정상화) */
+.listPanel {
+    flex: 0 0 32%;
+    width: 32%;
+    min-width: 320px;
+    max-width: 420px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--mantine-color-white);
+    border-radius: 8px;
+    box-shadow:
+        0 1px 4px 0 rgba(15, 23, 42, 0.08),
+        0 2px 10px 0 rgba(15, 23, 42, 0.06);
+    overflow: hidden;
+    min-height: 480px;
+    max-height: calc(100vh - 160px);
+    transition: width 300ms ease-in-out, min-width 300ms ease-in-out, opacity 300ms ease-in-out;
+}
+
+.listPanelCollapsed {
+    flex: 0 0 0 !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    opacity: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.reportListModelName {
+    font-size: 11px;
+    font-weight: 600;
+    color: #3b82f6;
+    margin-bottom: 2px;
+}
+
+/* ── Embedded Viewer Panel ─────────────────────────────────────── */
+.viewerPanel {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--mantine-color-white);
+    border-radius: 8px;
+    box-shadow:
+        0 1px 4px 0 rgba(15, 23, 42, 0.08),
+        0 2px 10px 0 rgba(15, 23, 42, 0.06);
+    overflow: hidden;
+    min-height: 480px;
+    max-height: calc(100vh - 160px);
+}
+
+.viewerPanelToolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 14px;
+    background: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    flex-shrink: 0;
+}
+
+.viewerPanelToolbarMeta {
+    flex: 1;
+    min-width: 0;
+}
+
+.viewerPanelToolbarActions {
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+/* 기능 라벨 — 컨텍스트 보조 (항상 11px) */
+.viewerPanelTitle {
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748b;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* 제목 + RID — 제목 끝과 RID 사이 고정 간격, 공간 부족 시 둘 다 가변 축소 */
+.viewerIdentity {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    flex: 1 1 auto;
+    overflow: hidden;
+}
+
+/* 선택된 보고서 제목 — 내용만큼 차지, 부족 시 말줄임 */
+.viewerPanelSubtitle {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1e293b;
+    min-width: 0;
+    flex: 0 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.viewerToolbarBtnLabel {
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.viewerRidBadge {
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 10px;
+    font-weight: 500;
+    color: #64748b;
+    background-color: #f8fafc;
+    border-color: #e2e8f0;
+}
+
+.viewerRidBadge :global(.mantine-Badge-label) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+}
+
+.viewerPanelStage {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    background: #e8edf2;
+    padding: 12px 8px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.viewerPanelEmpty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 320px;
+}
+
+.viewerProgressOverlay {
+    width: min(520px, calc(100% - 16px));
+    margin: 24px auto 0;
+    padding: 0;
+}
+
+.viewerPanelPaper {
+    width: auto;
+    min-height: 0;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+    flex-shrink: 0;
+    transition: transform 200ms ease-in-out;
+}
+
+.viewerPanelPaper[data-zoom="fit"] {
+    transform: none;
+    width: min(210mm, calc(100% - 8px));
+}
+
+.viewerPanelPaper[data-zoom="100"] {
+    transform: none;
+}
+
+.viewerPanelPaper[data-zoom="125"] {
+    transform: scale(1.25);
+    transform-origin: top center;
+    margin-bottom: 220px;
+}
+
+@media print {
+    .workspace {
+        display: block !important;
+        min-height: auto !important;
+        height: auto !important;
+        overflow: visible !important;
+        gap: 0 !important;
+    }
+
+    .listPanel,
+    .workspace > :not(.viewerPanel) {
+        display: none !important;
+    }
+
+    .viewerPanel {
+        display: block !important;
+        width: 100% !important;
+        max-width: none !important;
+        height: auto !important;
+        max-height: none !important;
+        overflow: visible !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+    }
+
+    .viewerPanelToolbar {
+        display: none !important;
+    }
+
+    .viewerProgressOverlay {
+        display: none !important;
+    }
+
+    .viewerPanelStage {
+        display: block !important;
+        height: auto !important;
+        max-height: none !important;
+        overflow: visible !important;
+        background: transparent !important;
+        padding: 0 !important;
+    }
+
+    .viewerPanelPaper {
+        width: 100% !important;
+        min-height: auto !important;
+        height: auto !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        padding: 0 !important;
+        transform: none !important;
+        margin: 0 !important;
+        overflow: visible !important;
+    }
+}

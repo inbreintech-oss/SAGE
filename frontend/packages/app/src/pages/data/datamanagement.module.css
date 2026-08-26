@@ -1,0 +1,1411 @@
+/* ═══════════════════════════════════════════════════════════════════
+   DataManagement — 3-Panel Flex Workspace
+   ─ Browse : 좌(32%) + 중(gap 24px) — 도구(API)관리 leftPanel 동일
+   ─ Detail : 중(sourceBinding + poolConsole gap 24px) + 우(30%, 콘텐츠 높이)
+   ─ 패널 간 gap 24px / 좌 접힘 시 workspaceCollapsed gap 0
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── Page Status Bar (최종 갱신 + 파이프라인 상태) ──────────────── */
+.pageStatusBar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.pageStatusTimestamp {
+    font-size: 12px;
+    color: var(--mantine-color-sageSlate-4);
+}
+
+.pipelineStatusDot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #22c55e;
+    margin-right: 5px;
+    box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.25);
+}
+
+.pipelineStatusText {
+    font-size: 12px;
+    color: #16a34a;
+    font-weight: 500;
+}
+
+.mockListBanner {
+    margin-bottom: 12px;
+}
+
+/* ── 3-Column Flex Workspace (좌32% — 도구관리 leftPanel 동일) ─── */
+.workspace {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    width: 100%;
+    gap: 24px;
+    transition: gap 300ms ease-in-out;
+}
+
+.workspaceCollapsed {
+    gap: 0;
+}
+
+.detailColumn {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 24px;
+    transition: flex 300ms ease-in-out, gap 300ms ease-in-out;
+}
+
+.detailColumnSingle {
+    gap: 0;
+}
+
+.leftPanel {
+    width: 32%;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--mantine-color-white);
+    border-radius: 8px;
+    box-shadow:
+        0 1px 4px 0 rgba(15, 23, 42, 0.08),
+        0 2px 10px 0 rgba(15, 23, 42, 0.06);
+    overflow: hidden;
+    transition: width 300ms ease-in-out, opacity 300ms ease-in-out;
+}
+
+.leftPanelCollapsed {
+    width: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.centerColumnStack {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    transition: flex 300ms ease-in-out;
+}
+
+.sourceBindingPanel,
+.poolConsolePanel {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--mantine-color-white);
+    border-radius: 8px;
+    box-shadow:
+        0 1px 4px 0 rgba(15, 23, 42, 0.08),
+        0 2px 10px 0 rgba(15, 23, 42, 0.06);
+    overflow: hidden;
+}
+
+.sourceBindingPanel {
+    flex-shrink: 0;
+}
+
+.poolConsolePanel {
+    flex-shrink: 0;
+}
+
+.poolConsolePanelCompact {
+    flex-shrink: 0;
+}
+
+.poolConsolePanelCompact .poolConsoleHeader {
+    border-bottom: none;
+}
+
+.rightPanelStreaming {
+    align-self: flex-start;
+}
+
+.streamingModeBanner {
+    margin: 12px 14px 0;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background-color: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: #1d4ed8;
+}
+
+.rightPanel {
+    width: 30%;
+    max-width: 576px;
+    flex-shrink: 0;
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--mantine-color-white);
+    border-radius: 8px;
+    box-shadow:
+        0 1px 4px 0 rgba(15, 23, 42, 0.08),
+        0 2px 10px 0 rgba(15, 23, 42, 0.06);
+    overflow: hidden;
+    transition: width 300ms ease-in-out, max-width 300ms ease-in-out, opacity 300ms ease-in-out;
+}
+
+.rightPanelHidden {
+    width: 0;
+    max-width: 0;
+    opacity: 0;
+    pointer-events: none;
+    box-shadow: none;
+}
+
+.placeholderInput :global(input::placeholder),
+.placeholderInput :global(textarea::placeholder) {
+    font-size: 12px !important;
+    font-weight: 400;
+    font-family: "Noto Sans KR", sans-serif !important;
+    color: #94a3b8;
+}
+
+.formFieldInput :global(input),
+.formFieldInput :global(textarea) {
+    font-size: 12px !important;
+    font-weight: 400 !important;
+    font-family: "Noto Sans KR", sans-serif !important;
+    color: #333333 !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   Panel Header — 도구(API) 관리 panelHeader 와 동일 규격
+   ════════════════════════════════════════════════════════════════════ */
+.panelHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    background-color: rgba(248, 250, 252, 0.7);
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--sage-border-color);
+    min-height: 68px;
+    gap: 8px;
+}
+
+.panelHeaderTitle {
+    font-size: 12px;
+    font-weight: 700;
+    color: #333333;
+}
+
+.panelCountBadge {
+    min-width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    background: #2563eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.headerActions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+}
+
+.collapseBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    border: none;
+    background: transparent;
+    color: #94a3b8;
+    cursor: pointer;
+    transition: color 150ms ease;
+    flex-shrink: 0;
+}
+
+.collapseBtn:hover {
+    color: #475569;
+}
+
+.expandBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    border: none;
+    background: transparent;
+    color: #2563eb;
+    cursor: pointer;
+    transition: color 150ms ease;
+    flex-shrink: 0;
+}
+
+.expandBtn:hover {
+    color: #1d4ed8;
+}
+
+/* ── LEFT Panel: Search Bar ──────────────────────────────────────── */
+.searchBar {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--sage-border-color);
+    flex-shrink: 0;
+    background-color: var(--mantine-color-sageSlate-0);
+}
+
+/* 좌·중앙 패널 첫 필드 라벨 공통 (도구 관리 .fieldLabel 동일) */
+.fieldLabel {
+    font-size: 12px;
+    font-weight: 700;
+    color: #333333;
+    margin-bottom: 6px;
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+/* ── LEFT Panel: 빈 데이터 예외 카드 (액티브 카드 높이 동기화형) ──── */
+/* 액티브 카드 내부 구조 기준 높이 산출:
+   padding(10+10) + title 2줄(12×1.4×2+4px) + desc 2줄(11×1.4×2+6px) + tag(9×1.4+4px) + border = ≈113px */
+.emptyPlaceholderCard {
+    min-height: 113px;
+    padding: 10px 14px;
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--mantine-color-sageSlate-1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.emptyPlaceholderIcon {
+    color: #1C7ED6;
+    flex-shrink: 0;
+}
+
+.emptyPlaceholderText {
+    font-size: 12px;
+    color: #1C7ED6;
+    text-align: center;
+}
+
+/* ── LEFT Panel: Data List Items (도구관리 border-left 토글) ─────── */
+.dataListItem {
+    padding: 16px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--mantine-color-sageSlate-1);
+    transition: background-color 80ms ease, border-color 80ms ease;
+    user-select: none;
+    position: relative;
+    border-left: 4px solid #F1F5F9;
+    background-color: #ffffff;
+}
+
+.dataListItem:hover {
+    background-color: var(--mantine-color-sageSlate-0);
+}
+
+.dataListItemActive {
+    padding: 16px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--mantine-color-sageSlate-1);
+    transition: background-color 80ms ease, border-color 80ms ease;
+    user-select: none;
+    position: relative;
+    border-left: 4px solid #2563EB;
+    background-color: rgba(239, 246, 255, 0.7);
+}
+
+.dataListItemActive::before {
+    content: none;
+}
+
+/* 데이터 아이템 제목: #333333 진한 텍스트, bold로 계층 구분 */
+.dataItemTitle {
+    flex: 1;
+    min-width: 0;
+    font-size: 12px;
+    font-weight: 700;
+    color: #333333;
+    line-height: 1.4;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.mockCardBadge {
+    display: inline-flex;
+    align-items: center;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: #6366f1;
+    background-color: #eef2ff;
+    border: 1px solid #c7d2fe;
+    flex-shrink: 0;
+}
+
+/* 데이터 아이템 설명: #333333 (font-weight 400으로 타이틀과 계층 구분) */
+.dataItemDesc {
+    font-size: 11px;
+    color: #333333;
+    line-height: 1.4;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    margin-bottom: 6px;
+}
+
+/* 소스 태그 행 (파일명, API명 뱃지) */
+.sourceTagsRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 2px;
+}
+
+/* 개별 소스 태그: 이미지의 작은 회색 chip (legacy/generic) */
+.sourceTag {
+    font-size: 10px;
+    padding: 1px 6px;
+    border-radius: 4px;
+    background-color: var(--mantine-color-sageSlate-1);
+    color: var(--mantine-color-sageSlate-5);
+    border: 1px solid var(--mantine-color-sageSlate-2);
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 120px;
+    text-overflow: ellipsis;
+    font-family: var(--sage-font-mono);
+}
+
+/* 파일 소스 태그 — emerald theme (이미지① 기준: color #047857 / bg #ECFDF5 / border #D1FAE5) */
+.sourceTagFile {
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background-color: #ECFDF5;                      /* emerald-50 */
+    color: #047857;                                 /* emerald-700 */
+    border: 1px solid #D1FAE5;                      /* emerald-100 */
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 200px;
+    text-overflow: ellipsis;
+    font-family: "Noto Sans KR", sans-serif;        /* 전용 한글 폰트 지정 */
+    display: inline-block;
+    font-weight: 700;
+}
+
+/* 도구(API) 소스 태그 — blue theme (이미지② 기준: color #1D4ED8 / bg #EFF6FF / border #DBEAFE) */
+.sourceTagTool {
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background-color: #EFF6FF;                      /* blue-50 */
+    color: #1D4ED8;                                 /* blue-700 */
+    border: 1px solid #DBEAFE;                      /* blue-100 */
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 160px;
+    text-overflow: ellipsis;
+    font-family: "Noto Sans KR", sans-serif;        /* 전용 한글 폰트 지정 */
+    display: inline-block;
+    font-weight: 700;
+}
+
+.categoryBadgeDefault {
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background-color: #EFF6FF;
+    color: #1D4ED8;
+    border: 1px solid #EFF6FF;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.categoryBadgeActive {
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background-color: #FFFBEB;
+    color: #B45309;
+    border: 1px solid #FFFBEB;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   CENTER Panel: 등록 유형 탭 → 아웃라인 버튼 그룹 (2~3분할)
+   ════════════════════════════════════════════════════════════════════ */
+.tabGroupSection {
+    padding: 12px 16px 0;
+    flex-shrink: 0;
+}
+
+.tabGroupLabel {
+    font-size: 12px;
+    font-weight: 600;
+    color: #333333;
+    letter-spacing: 0.01em;
+    margin-bottom: 8px;
+}
+
+/* 탭 버튼 그룹 래퍼 — 회색 필 컨테이너 */
+.tabGroupWrapper {
+    display: flex;
+    gap: 4px;
+    border-radius: 8px;
+    padding: 3px;
+    background: var(--mantine-color-sageSlate-1);
+    border: 1px solid var(--mantine-color-sageSlate-2);
+}
+
+/* DB 탭 비노출 시 2분할 (파일·도구) — 균등 너비 유지 */
+.tabGroupWrapperDual {
+    max-width: 420px;
+}
+
+/* 개별 탭 버튼 — 선택/비선택 모두 회색(#64748B) */
+.tabGroupBtn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 7px 10px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #64748b;
+    background-color: transparent;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 120ms ease;
+    white-space: nowrap;
+    outline: none;
+}
+
+.tabGroupBtn:hover:not(:disabled) {
+    background-color: rgba(255, 255, 255, 0.6);
+    color: #64748b;
+}
+
+.tabGroupBtn:disabled,
+.tabGroupBtnActive:disabled {
+    cursor: not-allowed;
+    opacity: 0.72;
+}
+
+/* 활성 탭 버튼: 흰색 바탕 + 미세 elevation만, 파란 accent 라인 없음 */
+.tabGroupBtnActive {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 7px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    box-shadow:
+        0 1px 3px rgba(15, 23, 42, 0.12),
+        0 1px 2px rgba(15, 23, 42, 0.08);
+    cursor: pointer;
+    white-space: nowrap;
+    outline: none;
+}
+
+/* ── CENTER Panel: Tab Content Area ─────────────────────────────── */
+.tabContentArea {
+    flex-shrink: 0;
+}
+
+/* ── CENTER Panel: Basic Form Section ───────────────────────────── */
+.formSection {
+    padding: 12px 16px 16px;
+    flex-shrink: 0;
+}
+
+/* 데이터 카테고리 — 분석설명 하단, 항목명 10자 이내 기준 컴팩트 너비 */
+.categoryFieldWrap {
+    margin-top: 4px;
+}
+
+.categoryFieldWrap .fieldLabel {
+    margin-bottom: 6px;
+}
+
+.categorySelect {
+    width: 10em;
+    max-width: 140px;
+}
+
+.categorySelect :global(.mantine-Select-input) {
+    text-overflow: ellipsis;
+}
+
+/* ── CENTER Panel: Section Label ─────────────────────────────────── */
+.sectionLabel {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: #333333;
+    margin-bottom: 8px;
+}
+
+/* ── CENTER Panel: File Dropzone ─────────────────────────────────── */
+.dropzone {
+    border: 2px dashed var(--mantine-color-sageSlate-3);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: border-color 150ms ease, background-color 150ms ease;
+    background-color: var(--mantine-color-sageSlate-0);
+    text-align: center;
+    padding: 24px 16px;
+}
+
+.dropzone:hover {
+    border-color: var(--mantine-color-sageBlue-5);
+    background-color: #f0f9ff;
+}
+
+/* Dropzone 내부 — 클릭/드롭 이벤트가 루트로 전달되도록 */
+.dropzoneInner {
+    pointer-events: none;
+}
+
+/* ── CENTER Panel: Pool Console (도구관리 consolePanel 스타일) ─── */
+.poolConsoleHeader {
+    padding: 20px;
+    background-color: rgba(248, 250, 252, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.poolConsoleIcon {
+    background: #dbeafe;
+    color: #2563eb;
+    padding: 6px;
+    border-radius: 6px;
+    display: flex;
+    flex-shrink: 0;
+}
+
+.poolConsoleActions {
+    flex-shrink: 0;
+}
+
+.buildSchemaBtn {
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.poolConsoleBody {
+    padding: 16px 20px;
+    min-height: 72px;
+    background-color: #fafbfc;
+}
+
+.poolListEmpty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 72px;
+}
+
+.poolListHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 6px 8px 8px;
+    border-bottom: 1px solid var(--mantine-color-sageSlate-2);
+}
+
+.poolListHeaderLabel {
+    letter-spacing: 0.02em;
+    color: #64748b;
+    text-transform: uppercase;
+}
+
+.poolListBody {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px 6px 6px;
+}
+
+.poolListItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 10px;
+    background-color: var(--mantine-color-white);
+    border: 1px solid var(--mantine-color-sageSlate-2);
+    border-radius: 6px;
+    transition: border-color 150ms ease, background-color 150ms ease, box-shadow 150ms ease;
+}
+
+.poolListItem:hover {
+    border-color: var(--mantine-color-sageBlue-3);
+    background-color: #f8fafc;
+}
+
+.poolListItemActive {
+    border-color: var(--mantine-color-sageBlue-5);
+    background-color: #eff6ff;
+    box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.15);
+}
+
+.poolListIndex {
+    flex-shrink: 0;
+    width: 18px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #94a3b8;
+    text-align: center;
+    font-family: var(--sage-font-mono);
+    margin-top: 2px;
+}
+
+.poolListIcon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    margin-top: 1px;
+    border-radius: 6px;
+    background-color: var(--mantine-color-sageSlate-0);
+    border: 1px solid var(--mantine-color-sageSlate-2);
+}
+
+.poolListContent {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.poolListName {
+    font-size: 12px;
+    font-weight: 600;
+    color: #334155;
+    line-height: 1.45;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: var(--pool-list-title-max-lines, 4);
+    -webkit-box-orient: vertical;
+    word-break: break-word;
+}
+
+.poolListMetaRow {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    min-width: 0;
+}
+
+.poolListMeta {
+    flex: 1;
+    min-width: 0;
+    font-size: 10px;
+    color: #94a3b8;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: var(--sage-font-mono);
+}
+
+.poolListTypeBadge {
+    flex-shrink: 0;
+}
+
+.poolListRemoveBtn {
+    flex-shrink: 0;
+}
+
+/* ── CENTER Panel: DB Tab Styles ─────────────────────────────────── */
+.dbConnectorHeader {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 16px 10px;
+}
+
+.dbConnectorTitle {
+    font-size: 13px;
+    font-weight: 600;
+    color: #333333;
+}
+
+.dbConnectorDesc {
+    font-size: 12px;
+    color: #333333;
+    padding: 0 16px 14px;
+    line-height: 1.5;
+}
+
+.dbFormRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 0 16px 10px;
+}
+
+.dbFormField {
+    padding: 0 16px 10px;
+}
+
+.dbFieldLabel {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: #333333;
+    margin-bottom: 4px;
+}
+
+/* 일반 안내성 텍스트 — #333333 통일 (버튼/그리드셀/도구박스 제외) */
+.guideText {
+    color: #333333;
+}
+
+.emptyGuideText {
+    font-size: 12px;
+    color: #333333;
+    text-align: center;
+}
+
+/* ── CENTER Panel: SQL 에디터 래퍼 ──────────────────────────────── */
+.sqlEditorWrapper {
+    border: 1px solid var(--mantine-color-sageSlate-7);
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 0 16px 12px;
+}
+
+.sqlEditorHeader {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    background-color: var(--mantine-color-sageSlate-8);
+    border-bottom: 1px solid var(--mantine-color-sageSlate-7);
+    min-height: 32px;
+}
+
+.sqlEditorDot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* ── CENTER Panel: DB Section Header ─────────────────────────────── */
+.dbSectionHeader {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--mantine-color-sageSlate-6);
+    margin-bottom: 10px;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   RIGHT Panel — 흰색 배경 + 내부 섹션 구조
+   ════════════════════════════════════════════════════════════════════ */
+
+.modelInfoCard {
+    margin: 16px 14px 12px;
+    padding: 12px 14px;
+    border: 1px solid var(--sage-border-color);
+    border-radius: 8px;
+    background-color: rgba(248, 250, 252, 0.85);
+}
+
+.modelInfoRow {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 11px;
+    color: #475569;
+    margin-bottom: 4px;
+}
+
+.modelInfoLabel {
+    font-weight: 700;
+    color: #334155;
+}
+
+.modelInfoValue {
+    text-align: right;
+    word-break: break-all;
+}
+
+.toolPreviewSection {
+    margin: 0 16px 16px;
+    padding-top: 12px;
+    border-top: 1px solid var(--sage-border-color);
+}
+
+.toolPreviewTitle {
+    font-size: 12px;
+    font-weight: 700;
+    color: #333333;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.toolPreviewBox {
+    border: 1px solid var(--mantine-color-sageSlate-2);
+    border-radius: 6px;
+    background-color: #0f172a;
+    padding: 10px 12px;
+    max-height: 200px;
+    overflow: auto;
+}
+
+.toolPreviewBody {
+    margin: 0;
+    font-family: var(--sage-font-mono);
+    font-size: 10px;
+    line-height: 1.5;
+    color: #e2e8f0;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.schemaSectionCard {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    margin: 12px 14px 0;
+    background-color: #f8fafc;
+    border: 1px solid var(--mantine-color-sageSlate-2);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.schemaSectionBody {
+    padding: 0 0 8px 0;
+}
+
+.schemaScrollHint {
+    font-size: 10px;
+    color: var(--mantine-color-sageSlate-4);
+    padding: 0 14px 6px;
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+/* 스키마 테이블 메타 정보 행 */
+.schemaMetaRow {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 10px 14px 6px;
+}
+
+.schemaMetaTitle {
+    font-size: 12px;
+    font-weight: 700;
+    color: #333333;
+}
+
+.schemaMetaDid {
+    font-size: 10px;
+    color: var(--mantine-color-sageSlate-4);
+    font-family: var(--sage-font-mono);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 150px;
+}
+
+.schemaStatusBadge {
+    font-size: 10px;
+    font-weight: 600;
+    color: #16a34a;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: #dcfce7;
+    border: 1px solid #bbf7d0;
+    white-space: nowrap;
+}
+
+/* 스키마 테이블 헤더 행 */
+.schemaTableHeader {
+    display: grid;
+    grid-template-columns: 1fr 80px 100px;
+    padding: 5px 14px;
+    background-color: #ffffff;
+    border-top: 1px solid var(--mantine-color-sageSlate-2);
+    border-bottom: 1px solid var(--mantine-color-sageSlate-2);
+}
+
+.schemaColLabel {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--mantine-color-sageSlate-4);
+}
+
+/* 스키마 테이블 데이터 행 */
+.schemaTableRow {
+    display: grid;
+    grid-template-columns: 1fr 80px 100px;
+    padding: 7px 14px;
+    border-bottom: 1px solid var(--mantine-color-sageSlate-1);
+    align-items: center;
+    transition: background-color 60ms ease;
+}
+
+.schemaTableRow:hover {
+    background-color: var(--mantine-color-sageSlate-0);
+}
+
+.schemaTableScroll {
+    flex-shrink: 0;
+    background-color: #ffffff;
+    min-height: 0;
+}
+
+.schemaTableScroll :global([data-orientation="vertical"]) {
+    opacity: 1;
+}
+
+.schemaTableBody {
+    flex-shrink: 0;
+    background-color: #ffffff;
+}
+
+.schemaFieldName {
+    font-family: var(--sage-font-mono);
+    font-size: 12px;
+    color: var(--mantine-color-sageSlate-7);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.schemaPkBadge {
+    font-size: 9px;
+    font-weight: 700;
+    padding: 1px 4px;
+    border-radius: 3px;
+    background-color: #dbeafe;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+    letter-spacing: 0.02em;
+}
+
+.schemaFieldType {
+    font-size: 11px;
+    color: var(--mantine-color-sageSlate-4);
+}
+
+.schemaFieldSource {
+    font-size: 10px;
+    color: var(--mantine-color-sageSlate-4);
+    text-align: right;
+}
+
+/* 스키마 빈 상태 */
+.schemaEmptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 14px 20px;
+    gap: 10px;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   RIGHT Panel — 연산 결과 JSON / 추천 질의문 블록
+   ════════════════════════════════════════════════════════════════════ */
+.jsonConsoleSection {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex-shrink: 0;
+    margin: 16px 14px 14px;
+}
+
+.jsonConsoleSectionStreaming {
+    flex: 1;
+    margin-top: 8px;
+}
+
+.consoleCardWrapper {
+    padding: 0;
+    position: relative;
+}
+
+.suggestedQueriesBlock {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    background-color: #f8fafc;
+    border: 1px solid var(--mantine-color-sageSlate-2);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   RIGHT Panel — 다크 콘솔 카드 (JSON + 미리보기)
+   ════════════════════════════════════════════════════════════════════ */
+
+/* 콘솔 카드 상단 레이블 행 */
+.consoleCardLabel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.consoleCardTitle {
+    font-size: 12px;
+    font-weight: 600;
+    color: #333333;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.consoleCardBadge {
+    font-size: 10px;
+    font-family: var(--sage-font-mono);
+    color: var(--mantine-color-sageSlate-4);
+    background: var(--mantine-color-sageSlate-1);
+    padding: 1px 6px;
+    border-radius: 4px;
+}
+
+/* 다크 콘솔 카드 본체 */
+.consoleCard {
+    background-color: #0f172a;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid #1e293b;
+}
+
+/* JSON 없음 — placeholder 기본 높이 */
+.consoleCardPlaceholder {
+    min-height: 100px;
+}
+
+/* JSON 있음 — ScrollArea 높이 제한 */
+.consoleCardFilled {
+    height: auto;
+}
+
+/* SSE 스트리밍 — ScrollArea 높이 제한 */
+.consoleCardStreaming {
+    min-height: 120px;
+}
+
+.consoleCardStreamingActive {
+    min-height: 200px;
+}
+
+.consoleJsonScrollArea {
+    font-family: var(--sage-font-mono);
+    min-height: 0;
+}
+
+.consoleJsonScrollArea :global([data-orientation="vertical"]) {
+    opacity: 1;
+}
+
+/* 콘솔 카드 내부 pre/code 영역 */
+.consoleCardBody {
+    padding: 10px 12px;
+    margin: 0;
+    font-family: var(--sage-font-mono);
+    font-size: 10px;
+    line-height: 1.7;
+    color: #94a3b8;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+/* 콘솔 카드 내부 JSON 키 색상 */
+.consoleKey {
+    color: #7dd3fc;
+}
+
+/* 콘솔 카드 설명 텍스트 */
+.consoleDesc {
+    font-size: 12px;
+    color: #333333;
+    line-height: 1.5;
+    margin-bottom: 6px;
+}
+
+.suggestedQueriesList {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border-top: 1px solid var(--mantine-color-sageSlate-2);
+}
+
+.suggestedQueryItem {
+    padding: 9px 14px;
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--mantine-color-sageSlate-1);
+    transition: background-color 60ms ease;
+}
+
+.suggestedQueryItem:hover {
+    background-color: var(--mantine-color-sageSlate-0);
+}
+
+.suggestedQueryText {
+    color: #334155;
+    font-size: 12px;
+    line-height: 1.5;
+    word-break: break-word;
+}
+
+.suggestedQueriesEmpty {
+    padding: 12px 14px 14px;
+    background-color: #ffffff;
+    border-top: 1px solid var(--mantine-color-sageSlate-2);
+}
+
+/* ── RIGHT Panel: 터미널 로그 콘솔 (SSE 스트리밍 중) ─────────────── */
+.terminalBody {
+    padding: 10px 12px;
+    background-color: transparent;
+    border-radius: 0;
+}
+
+.terminalLine {
+    font-family: var(--sage-font-mono);
+    font-size: 11px;
+    line-height: 1.65;
+    padding: 1px 0;
+    word-break: break-all;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+}
+
+.terminalPrompt {
+    color: #4ade80;
+    flex-shrink: 0;
+    font-weight: 700;
+}
+
+.terminalText {
+    color: #94a3b8;
+    flex: 1;
+}
+
+.terminalTextError {
+    color: #f87171;
+    flex: 1;
+}
+
+.terminalCursor {
+    display: inline-block;
+    width: 7px;
+    height: 13px;
+    background-color: #e2e8f0;
+    vertical-align: middle;
+    margin-left: 3px;
+    animation: cursorBlink 1.0s step-end infinite;
+}
+
+@keyframes cursorBlink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+}
+
+/* ── CENTER Panel: API Tab — 도구 선택 카드 ─────────────────────── */
+.apiToolCard {
+    margin: 12px 16px;
+    padding: 12px 14px;
+    border: 1px solid var(--sage-border-color);
+    border-radius: 8px;
+    background-color: var(--mantine-color-sageSlate-0);
+}
+
+.apiToolCardHeader {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.apiTypeBadge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background-color: #dbeafe;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.apiToolTitle {
+    flex: 1;
+    min-width: 0;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--mantine-color-sageSlate-8);
+    font-family: "Noto Sans KR", sans-serif;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+.apiToolIdMeta {
+    display: block;
+    font-size: 10px;
+    color: #94a3b8;
+    font-family: var(--sage-font-mono);
+    margin-bottom: 6px;
+    word-break: break-all;
+}
+
+.apiToolDesc {
+    font-size: 12px;
+    color: var(--mantine-color-sageSlate-4);
+    line-height: 1.5;
+    margin-bottom: 0;
+}
+
+.fieldLabel {
+    font-size: 12px;
+    font-weight: 700;
+    color: #333333;
+}
+
+.previewQuerySection {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--mantine-color-sageSlate-2);
+}
+
+.placeholderInput :global(input::placeholder),
+.placeholderInput :global(textarea::placeholder) {
+    font-size: 12px !important;
+    font-weight: 400;
+    font-family: "Noto Sans KR", sans-serif !important;
+    color: #94a3b8;
+}
+
+.sqlQueryEditor :global(textarea) {
+    font-family: var(--sage-font-mono);
+    font-size: 12px;
+    color: #e2e8f0;
+    background-color: #0f172a;
+    border-color: #1e293b;
+}
+
+.sqlQueryEditor :global(textarea::placeholder) {
+    color: #94a3b8;
+    font-size: 12px;
+}
+
+/* ── CENTER Panel: Excel Tab — 컬럼 선택 테이블 ─────────────────── */
+.columnTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.columnTableHeader {
+    display: grid;
+    grid-template-columns: 32px 1fr 100px;
+    padding: 5px 8px;
+    background-color: var(--mantine-color-sageSlate-0);
+    border-top: 1px solid var(--sage-border-color);
+    border-bottom: 1px solid var(--sage-border-color);
+}
+
+.columnTableHeaderLabel {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--mantine-color-sageSlate-4);
+}
+
+.columnTableRow {
+    display: grid;
+    grid-template-columns: 32px 1fr 100px;
+    padding: 6px 8px;
+    border-bottom: 1px solid var(--mantine-color-sageSlate-1);
+    align-items: center;
+}
+
+.columnTableRow:hover {
+    background-color: var(--mantine-color-sageSlate-0);
+}
+
+.columnTypeBadge {
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background-color: var(--mantine-color-sageSlate-1);
+    color: var(--mantine-color-sageSlate-5);
+    border: 1px solid var(--mantine-color-sageSlate-2);
+    display: inline-block;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   CENTER Panel: 서브 섹션 바깥 테두리 컨테이너 (항목 5~7 교정)
+   ════════════════════════════════════════════════════════════════════ */
+
+/* [5] 대상 시트 선택 영역 바깥 테두리 */
+.sheetSelectWrapper {
+    border: 1px solid var(--mantine-color-sageSlate-2);
+    border-radius: 6px;
+    padding: 10px 12px;
+    background-color: var(--mantine-color-white);
+}
+
+/* [6] 대상 컬럼 선택 및 타입 정합 영역 바깥 테두리 */
+.columnSelectWrapper {
+    border: 1px solid var(--mantine-color-sageSlate-2);
+    border-radius: 6px;
+    overflow: hidden;   /* 내부 헤더 bg가 모서리를 넘치지 않도록 */
+    background-color: var(--mantine-color-white);
+}
+
+/* columnTableHeader가 wrapper 안에 있을 때 border-top 제거 (중복 방지) */
+.columnSelectWrapper .columnTableHeader {
+    border-top: none;
+}
+
+/* [7] 멀티 스키마 통합 대상 POOL 아이템 컨테이너 */
+.poolItemsContainer {
+    border: 1px solid var(--mantine-color-sageSlate-2);
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: var(--mantine-color-sageSlate-0);
+    --pool-list-title-max-lines: 4;
+}

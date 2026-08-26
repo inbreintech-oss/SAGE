@@ -1,0 +1,8 @@
+﻿node_modules
+.pnpm
+.pnpm-store
+dist
+build
+packages/**/node_modules
+packages/**/dist
+packages/**/build

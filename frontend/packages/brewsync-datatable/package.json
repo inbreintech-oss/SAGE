@@ -1,0 +1,84 @@
+{
+  "name": "brewsync-datatable",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "description": "DataTable Component Library for Brewsync Admin Frontend",
+  "scripts": {
+    "build": "rollup --config rollup.config.mjs",
+    "watch": "rollup --watch --config rollup.config.mjs",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.15.1",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.esm.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "package.json",
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.esm.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./dist/styles.css": "./dist/styles.css",
+    "./package.json": "./package.json"
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "4.1.1",
+    "@faker-js/faker": "^10.1.0",
+    "@rollup/plugin-commonjs": "^29.0.0",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-typescript": "^12.3.0",
+    "rollup": "^4.31.0",
+    "@storybook/addon-a11y": "9.1.15",
+    "@storybook/addon-docs": "9.1.15",
+    "@storybook/addon-onboarding": "9.1.15",
+    "@storybook/addon-vitest": "9.1.15",
+    "@storybook/react-vite": "9.1.15",
+    "@tabler/icons-react": "^3.34.1",
+    "@tanstack/react-virtual": "^3.13.12",
+    "@types/node": "^24.3.0",
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "@vitest/browser-playwright": "^4.0.4",
+    "@vitest/coverage-v8": "^4.0.4",
+    "autoprefixer": "^10.4.21",
+    "playwright": "^1.56.1",
+    "postcss": "^8.5.6",
+    "postcss-preset-mantine": "^1.18.0",
+    "postcss-simple-vars": "^7.0.1",
+    "rollup-plugin-dts": "^6.2.3",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
+    "storybook": "9.1.15",
+    "typescript": "~5.8.3",
+    "vite": "^7.1.12",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^4.0.4"
+  },
+  "peerDependencies": {
+    "@mantine/core": "^8.2.5",
+    "@mantine/dates": "^8.2.5",
+    "@mantine/hooks": "^8.2.5",
+    "@tabler/icons-react": "^3.34.1",
+    "@tanstack/react-table": "^8.21.3",
+    "@tanstack/react-virtual": "^3.13.12",
+    "clsx": "^2.1.1",
+    "dayjs": "^1.11.13",
+    "lodash": "^4.17.21",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  }
+}

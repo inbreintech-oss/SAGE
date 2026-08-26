@@ -1,0 +1,244 @@
+{
+  "$metadata": {
+    "tokenSetOrder": ["global", "color", "spacing", "radius", "layout", "typography", "shadow"],
+    "collection": "SAG-E / Light Shell",
+    "description": "① Light Shell — Icon Rail + Global Top Bar. Import via Tokens Studio for Figma."
+  },
+  "global": {
+    "font-family": {
+      "$type": "fontFamily",
+      "$value": "Noto Sans KR"
+    },
+    "font-family-mono": {
+      "$type": "fontFamily",
+      "$value": "Fira Code"
+    },
+    "grid-base": {
+      "$type": "dimension",
+      "$value": "4px"
+    }
+  },
+  "color": {
+    "surface": {
+      "page": { "$type": "color", "$value": "#F9FAFB" },
+      "card": { "$type": "color", "$value": "#FFFFFF" },
+      "rail": { "$type": "color", "$value": "#FFFFFF" },
+      "rail-hover": { "$type": "color", "$value": "#F3F4F6" },
+      "rail-active": { "$type": "color", "$value": "#EFF6FF" },
+      "header": { "$type": "color", "$value": "#FFFFFF" },
+      "overlay": { "$type": "color", "$value": "rgba(17, 24, 39, 0.4)" },
+      "search": { "$type": "color", "$value": "#F3F4F6" }
+    },
+    "border": {
+      "default": { "$type": "color", "$value": "#E5E7EB" },
+      "subtle": { "$type": "color", "$value": "#F3F4F6" },
+      "focus": { "$type": "color", "$value": "#0090DA" }
+    },
+    "text": {
+      "primary": { "$type": "color", "$value": "#111827" },
+      "secondary": { "$type": "color", "$value": "#6B7280" },
+      "tertiary": { "$type": "color", "$value": "#9CA3AF" },
+      "inverse": { "$type": "color", "$value": "#FFFFFF" },
+      "link": { "$type": "color", "$value": "#0090DA" },
+      "nav-active": { "$type": "color", "$value": "#0090DA" },
+      "nav-default": { "$type": "color", "$value": "#6B7280" }
+    },
+    "brand": {
+      "primary": { "$type": "color", "$value": "#0090DA" },
+      "primary-hover": { "$type": "color", "$value": "#0085CC" },
+      "primary-subtle": { "$type": "color", "$value": "#E2FAFF" }
+    },
+    "semantic": {
+      "success": { "$type": "color", "$value": "#10B981" },
+      "warning": { "$type": "color", "$value": "#F59E0B" },
+      "error": { "$type": "color", "$value": "#EF4444" },
+      "info": { "$type": "color", "$value": "#3B82F6" }
+    },
+    "icon": {
+      "default": { "$type": "color", "$value": "#6B7280" },
+      "hover": { "$type": "color", "$value": "#111827" },
+      "active": { "$type": "color", "$value": "#0090DA" }
+    }
+  },
+  "spacing": {
+    "1": { "$type": "dimension", "$value": "4px" },
+    "2": { "$type": "dimension", "$value": "8px" },
+    "3": { "$type": "dimension", "$value": "12px" },
+    "4": { "$type": "dimension", "$value": "16px" },
+    "5": { "$type": "dimension", "$value": "20px" },
+    "6": { "$type": "dimension", "$value": "24px" },
+    "8": { "$type": "dimension", "$value": "32px" }
+  },
+  "radius": {
+    "sm": { "$type": "dimension", "$value": "6px" },
+    "md": { "$type": "dimension", "$value": "8px" },
+    "lg": { "$type": "dimension", "$value": "12px" },
+    "full": { "$type": "dimension", "$value": "9999px" }
+  },
+  "layout": {
+    "frame-width": { "$type": "dimension", "$value": "1440px" },
+    "frame-height": { "$type": "dimension", "$value": "900px" },
+    "topbar-height": { "$type": "dimension", "$value": "56px" },
+    "context-header-height": { "$type": "dimension", "$value": "48px" },
+    "rail-width-collapsed": { "$type": "dimension", "$value": "64px" },
+    "rail-width-expanded": { "$type": "dimension", "$value": "220px" },
+    "page-padding": { "$type": "dimension", "$value": "24px" }
+  },
+  "typography": {
+    "h1": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{global.font-family}",
+        "fontSize": "24px",
+        "fontWeight": 700,
+        "lineHeight": "32px",
+        "letterSpacing": "-0.02em"
+      }
+    },
+    "h2": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{global.font-family}",
+        "fontSize": "20px",
+        "fontWeight": 600,
+        "lineHeight": "28px",
+        "letterSpacing": "-0.01em"
+      }
+    },
+    "h3": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{global.font-family}",
+        "fontSize": "16px",
+        "fontWeight": 600,
+        "lineHeight": "24px"
+      }
+    },
+    "body-m": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{global.font-family}",
+        "fontSize": "14px",
+        "fontWeight": 400,
+        "lineHeight": "22px"
+      }
+    },
+    "label-m": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{global.font-family}",
+        "fontSize": "12px",
+        "fontWeight": 500,
+        "lineHeight": "16px",
+        "letterSpacing": "0.02em"
+      }
+    },
+    "nav-rail": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{global.font-family}",
+        "fontSize": "14px",
+        "fontWeight": 500,
+        "lineHeight": "20px"
+      }
+    },
+    "nav-section": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{global.font-family}",
+        "fontSize": "11px",
+        "fontWeight": 600,
+        "lineHeight": "14px",
+        "letterSpacing": "0.08em",
+        "textCase": "uppercase"
+      }
+    }
+  },
+  "shadow": {
+    "xs": {
+      "$type": "shadow",
+      "$value": {
+        "color": "rgba(0, 0, 0, 0.05)",
+        "offsetX": "0px",
+        "offsetY": "1px",
+        "blur": "2px",
+        "spread": "0px"
+      }
+    },
+    "sm": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "color": "rgba(0, 0, 0, 0.08)",
+          "offsetX": "0px",
+          "offsetY": "1px",
+          "blur": "3px",
+          "spread": "0px"
+        },
+        {
+          "color": "rgba(0, 0, 0, 0.04)",
+          "offsetX": "0px",
+          "offsetY": "1px",
+          "blur": "2px",
+          "spread": "0px"
+        }
+      ]
+    },
+    "md": {
+      "$type": "shadow",
+      "$value": {
+        "color": "rgba(0, 0, 0, 0.08)",
+        "offsetX": "0px",
+        "offsetY": "4px",
+        "blur": "12px",
+        "spread": "0px"
+      }
+    },
+    "card-hover": {
+      "$type": "shadow",
+      "$value": {
+        "color": "rgba(0, 0, 0, 0.10)",
+        "offsetX": "0px",
+        "offsetY": "8px",
+        "blur": "24px",
+        "spread": "0px"
+      }
+    },
+    "focus-ring": {
+      "$type": "shadow",
+      "$value": {
+        "color": "rgba(0, 144, 218, 0.25)",
+        "offsetX": "0px",
+        "offsetY": "0px",
+        "blur": "0px",
+        "spread": "3px"
+      }
+    }
+  },
+  "component": {
+    "button-primary": {
+      "height": { "$type": "dimension", "$value": "36px" },
+      "radius": { "$type": "dimension", "$value": "{radius.md}" },
+      "padding-x": { "$type": "dimension", "$value": "16px" },
+      "bg": { "$type": "color", "$value": "{color.brand.primary}" },
+      "bg-hover": { "$type": "color", "$value": "{color.brand.primary-hover}" },
+      "text": { "$type": "color", "$value": "{color.text.inverse}" }
+    },
+    "nav-rail-item": {
+      "height-collapsed": { "$type": "dimension", "$value": "44px" },
+      "height-expanded": { "$type": "dimension", "$value": "44px" },
+      "active-indicator-width": { "$type": "dimension", "$value": "3px" },
+      "icon-size": { "$type": "dimension", "$value": "20px" },
+      "transition-duration": { "$type": "duration", "$value": "180ms" }
+    },
+    "input": {
+      "height": { "$type": "dimension", "$value": "36px" },
+      "radius": { "$type": "dimension", "$value": "{radius.md}" },
+      "padding-x": { "$type": "dimension", "$value": "12px" }
+    },
+    "card": {
+      "radius": { "$type": "dimension", "$value": "{radius.lg}" },
+      "padding": { "$type": "dimension", "$value": "{spacing.5}" }
+    }
+  }
+}

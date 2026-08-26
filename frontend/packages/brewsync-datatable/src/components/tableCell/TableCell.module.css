@@ -1,0 +1,13 @@
+﻿.table-cell {
+    white-space: nowrap;
+    flex-shrink: 0;
+
+    &.with-col-borders {
+        border-inline-end: 1px solid var(--table-border-color);
+    }
+
+    &.resizing {
+        border-inline-end-width: var(--table-resize-handle-width);
+        border-inline-end-color: var(--table-resize-handle-resizing-color);
+    }
+}

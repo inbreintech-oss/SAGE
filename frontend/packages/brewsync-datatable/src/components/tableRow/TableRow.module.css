@@ -1,0 +1,36 @@
+﻿.table-row {
+    min-width: 100%;
+
+    & > div {
+        background-color: var(--table-background-color);
+    }
+
+    &.header {
+        &.sticky-header {
+            position: sticky;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+
+        & > div {
+            background-color: var(--table-header-color);
+        }
+    }
+
+    &.with-row-borders > div {
+        border-bottom: 1px solid var(--table-border-color);
+    }
+
+    &.striped > div {
+        background-color: var(--table-striped-color);
+    }
+
+    &.hover:hover > div {
+        background-color: var(--table-hover-color);
+    }
+
+    &.clickable {
+        cursor: pointer;
+    }
+}

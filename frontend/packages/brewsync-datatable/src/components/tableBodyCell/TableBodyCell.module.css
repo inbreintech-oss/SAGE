@@ -1,0 +1,4 @@
+﻿.resizing {
+    border-inline-end-width: var(--table-resize-handle-width) !important;
+    border-inline-end-color: var(--table-resize-handle-resizing-color) !important;
+}

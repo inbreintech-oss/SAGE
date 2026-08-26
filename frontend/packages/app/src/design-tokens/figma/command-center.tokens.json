@@ -1,0 +1,261 @@
+{
+  "$metadata": {
+    "tokenSetOrder": ["global", "color", "spacing", "radius", "layout", "typography", "shadow"],
+    "collection": "SAG-E / Command Center",
+    "description": "② Command Center — Dark Top Bar + Light Secondary Nav. Import via Tokens Studio for Figma."
+  },
+  "global": {
+    "font-family": {
+      "$type": "fontFamily",
+      "$value": "Noto Sans KR"
+    },
+    "font-family-mono": {
+      "$type": "fontFamily",
+      "$value": "Fira Code"
+    },
+    "grid-base": {
+      "$type": "dimension",
+      "$value": "4px"
+    }
+  },
+  "color": {
+    "surface": {
+      "topbar": { "$type": "color", "$value": "#18181B" },
+      "topbar-hover": { "$type": "color", "$value": "#27272A" },
+      "nav": { "$type": "color", "$value": "#FAFAFA" },
+      "nav-hover": { "$type": "color", "$value": "#F4F4F5" },
+      "nav-active": { "$type": "color", "$value": "#F0FDFA" },
+      "page": { "$type": "color", "$value": "#F4F4F5" },
+      "panel": { "$type": "color", "$value": "#FFFFFF" },
+      "code": { "$type": "color", "$value": "#F8FAFC" },
+      "workspace-selector": { "$type": "color", "$value": "#27272A" }
+    },
+    "border": {
+      "nav": { "$type": "color", "$value": "#E4E4E7" },
+      "panel": { "$type": "color", "$value": "#E4E4E7" },
+      "topbar": { "$type": "color", "$value": "#27272A" },
+      "active": { "$type": "color", "$value": "#0D9488" }
+    },
+    "text": {
+      "topbar-primary": { "$type": "color", "$value": "#FAFAFA" },
+      "topbar-secondary": { "$type": "color", "$value": "#A1A1AA" },
+      "nav-primary": { "$type": "color", "$value": "#18181B" },
+      "nav-secondary": { "$type": "color", "$value": "#71717A" },
+      "nav-active": { "$type": "color", "$value": "#0D9488" },
+      "body": { "$type": "color", "$value": "#3F3F46" },
+      "muted": { "$type": "color", "$value": "#71717A" }
+    },
+    "brand": {
+      "primary": { "$type": "color", "$value": "#0D9488" },
+      "primary-hover": { "$type": "color", "$value": "#0F766E" },
+      "primary-subtle": { "$type": "color", "$value": "#CCFBF1" },
+      "secondary": { "$type": "color", "$value": "#0090DA" }
+    },
+    "status": {
+      "running": { "$type": "color", "$value": "#22C55E" },
+      "running-bg": { "$type": "color", "$value": "#DCFCE7" },
+      "running-text": { "$type": "color", "$value": "#166534" },
+      "pending": { "$type": "color", "$value": "#F59E0B" },
+      "failed": { "$type": "color", "$value": "#EF4444" },
+      "failed-bg": { "$type": "color", "$value": "#FEE2E2" },
+      "failed-text": { "$type": "color", "$value": "#991B1B" },
+      "idle": { "$type": "color", "$value": "#A1A1AA" }
+    },
+    "category": {
+      "data": { "$type": "color", "$value": "#0D9488" },
+      "report": { "$type": "color", "$value": "#2563EB" },
+      "tool": { "$type": "color", "$value": "#EA580C" },
+      "dashboard": { "$type": "color", "$value": "#7C3AED" }
+    },
+    "semantic": {
+      "success": { "$type": "color", "$value": "#22C55E" },
+      "warning": { "$type": "color", "$value": "#F59E0B" },
+      "error": { "$type": "color", "$value": "#EF4444" },
+      "info": { "$type": "color", "$value": "#0090DA" }
+    }
+  },
+  "spacing": {
+    "1": { "$type": "dimension", "$value": "4px" },
+    "2": { "$type": "dimension", "$value": "8px" },
+    "3": { "$type": "dimension", "$value": "12px" },
+    "4": { "$type": "dimension", "$value": "16px" },
+    "5": { "$type": "dimension", "$value": "20px" },
+    "6": { "$type": "dimension", "$value": "24px" }
+  },
+  "radius": {
+    "sm": { "$type": "dimension", "$value": "4px" },
+    "md": { "$type": "dimension", "$value": "6px" },
+    "lg": { "$type": "dimension", "$value": "8px" },
+    "full": { "$type": "dimension", "$value": "9999px" }
+  },
+  "layout": {
+    "frame-width": { "$type": "dimension", "$value": "1440px" },
+    "frame-height": { "$type": "dimension", "$value": "900px" },
+    "topbar-height": { "$type": "dimension", "$value": "48px" },
+    "page-title-height": { "$type": "dimension", "$value": "44px" },
+    "nav-width": { "$type": "dimension", "$value": "240px" },
+    "panel-left-width": { "$type": "dimension", "$value": "280px" },
+    "panel-right-width": { "$type": "dimension", "$value": "360px" },
+    "panel-header-height": { "$type": "dimension", "$value": "44px" }
+  },
+  "typography": {
+    "h1": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{global.font-family}",
+        "fontSize": "22px",
+        "fontWeight": 600,
+        "lineHeight": "30px"
+      }
+    },
+    "h2": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{global.font-family}",
+        "fontSize": "18px",
+        "fontWeight": 600,
+        "lineHeight": "26px"
+      }
+    },
+    "h3": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{global.font-family}",
+        "fontSize": "15px",
+        "fontWeight": 600,
+        "lineHeight": "22px"
+      }
+    },
+    "body-m": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{global.font-family}",
+        "fontSize": "14px",
+        "fontWeight": 400,
+        "lineHeight": "22px"
+      }
+    },
+    "body-s": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{global.font-family}",
+        "fontSize": "13px",
+        "fontWeight": 400,
+        "lineHeight": "20px"
+      }
+    },
+    "label-m": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{global.font-family}",
+        "fontSize": "12px",
+        "fontWeight": 500,
+        "lineHeight": "16px"
+      }
+    },
+    "mono-s": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{global.font-family-mono}",
+        "fontSize": "12px",
+        "fontWeight": 400,
+        "lineHeight": "18px"
+      }
+    },
+    "nav-section": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{global.font-family}",
+        "fontSize": "11px",
+        "fontWeight": 600,
+        "lineHeight": "14px",
+        "letterSpacing": "0.06em",
+        "textCase": "uppercase"
+      }
+    },
+    "topbar": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{global.font-family}",
+        "fontSize": "13px",
+        "fontWeight": 500,
+        "lineHeight": "18px"
+      }
+    }
+  },
+  "shadow": {
+    "topbar": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "color": "#27272A",
+          "offsetX": "0px",
+          "offsetY": "1px",
+          "blur": "0px",
+          "spread": "0px"
+        },
+        {
+          "color": "rgba(0, 0, 0, 0.15)",
+          "offsetX": "0px",
+          "offsetY": "4px",
+          "blur": "12px",
+          "spread": "0px"
+        }
+      ]
+    },
+    "panel": {
+      "$type": "shadow",
+      "$value": {
+        "color": "rgba(0, 0, 0, 0.06)",
+        "offsetX": "0px",
+        "offsetY": "1px",
+        "blur": "3px",
+        "spread": "0px"
+      }
+    },
+    "dropdown": {
+      "$type": "shadow",
+      "$value": {
+        "color": "rgba(0, 0, 0, 0.12)",
+        "offsetX": "0px",
+        "offsetY": "8px",
+        "blur": "24px",
+        "spread": "0px"
+      }
+    },
+    "focus-teal": {
+      "$type": "shadow",
+      "$value": {
+        "color": "rgba(13, 148, 136, 0.30)",
+        "offsetX": "0px",
+        "offsetY": "0px",
+        "blur": "0px",
+        "spread": "3px"
+      }
+    }
+  },
+  "component": {
+    "button-execute": {
+      "height": { "$type": "dimension", "$value": "32px" },
+      "radius": { "$type": "dimension", "$value": "{radius.md}" },
+      "bg": { "$type": "color", "$value": "{color.brand.primary}" },
+      "bg-hover": { "$type": "color", "$value": "{color.brand.primary-hover}" },
+      "icon-size": { "$type": "dimension", "$value": "16px" }
+    },
+    "nav-leaf-item": {
+      "height": { "$type": "dimension", "$value": "36px" },
+      "radius": { "$type": "dimension", "$value": "{radius.md}" },
+      "active-border-width": { "$type": "dimension", "$value": "3px" },
+      "icon-size": { "$type": "dimension", "$value": "18px" }
+    },
+    "status-badge": {
+      "height": { "$type": "dimension", "$value": "22px" },
+      "padding-x": { "$type": "dimension", "$value": "8px" },
+      "dot-size": { "$type": "dimension", "$value": "6px" }
+    },
+    "table-row": {
+      "height": { "$type": "dimension", "$value": "40px" },
+      "selected-border-width": { "$type": "dimension", "$value": "2px" }
+    }
+  }
+}

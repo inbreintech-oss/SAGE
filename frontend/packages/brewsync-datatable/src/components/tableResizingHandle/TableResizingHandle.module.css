@@ -1,0 +1,14 @@
+﻿.table-resizing-handle {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: var(--table-resize-handle-width);
+    cursor: ew-resize;
+    user-select: none;
+    background-color: var(--table-resize-handle-color);
+
+    &.resizing {
+        background-color: var(--table-resize-handle-resizing-color);
+    }
+}

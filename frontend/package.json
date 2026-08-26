@@ -1,0 +1,15 @@
+{
+  "name": "brewsync-admin-root",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev:app": "pnpm --filter admin-frontend run dev",
+    "build:app": "pnpm --filter admin-frontend run build",
+    "build:datatable": "pnpm --filter brewsync-datatable run build"
+  },
+  "devDependencies": {
+    "postcss": "^8.5.6",
+    "postcss-preset-mantine": "^1.18.0",
+    "postcss-simple-vars": "^7.0.1"
+  }
+}
