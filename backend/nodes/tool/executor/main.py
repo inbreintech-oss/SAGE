@@ -45,9 +45,20 @@ class ToolAccessValidator(BaseValidator):
                                 raise PermissionError(
                                     f"허용되지 않은 도구 '{tool_name}' 호출이 감지되었습니다. "
                                     f"현재 사용 가능한 도구 목록은 {self.allowed_tools} 입니다. "
-                                    "코드(code) 섹션에서 정의한 내부 함수는 caller에서 직접 call()로 호출할 수 없습니다."
+                                    f"await call() 첫 인자를 {self.allowed_tools} 중 하나로 바꿔라. "
+                                    "generate 초안 tm-* tool_id 는 허용 목록에 없으면 호출 금지."
                                 )
 
+        return data
+
+
+class CallerMcpImportValidator(BaseValidator):
+    """caller 는 sage.mcp.call 을 import 한다. kwargs['call'] 함수 주입 금지."""
+
+    def validate(self, data: Any):
+        from sage.tool.caller_contract import assert_caller_mcp_import, caller_source_of
+
+        assert_caller_mcp_import(caller_source_of(data))
         return data
 
 
@@ -56,8 +67,12 @@ class ToolExecutor(NodeV):
     """ 도구 실행 노드 """
 
     def __init__(self):
-        # 인스턴스 생성 시점에 빈 리스트 혹은 기본값으로 초기화
-        super().__init__(validators=[ToolAccessValidator(allowed_tools=[])])
+        super().__init__(
+            validators=[
+                ToolAccessValidator(allowed_tools=[]),
+                CallerMcpImportValidator(),
+            ]
+        )
 
     async def run(self, **kwargs):
         # 허용된 도구 이름 리스트 실행 시간 주입

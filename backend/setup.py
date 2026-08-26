@@ -15,7 +15,7 @@ setup(
     long_description_content_type="text/markdown",
     author="Inbrein",
     author_email="inbreintech@inbrein.com",
-    url="https://github.com/inbreintech-oss/SAGE.git",
+    url="https://github.com/inbreintech/SAGE.py.git",
     license="MIT",
     license_files=("LICENSE",),
     packages=find_packages(),
@@ -36,7 +36,7 @@ setup(
         "Topic :: Scientific/Engineering :: Artificial Intelligence",
     ],
     project_urls={
-        "Source": "https://github.com/inbreintech-oss/SAGE",
-        "Bug Tracker": "https://github.com/inbreintech-oss/SAGE/issues",
+        "Source": "https://github.com/inbreintech/SAGE.py",
+        "Bug Tracker": "https://github.com/inbreintech/SAGE.py/issues",
     },
 )

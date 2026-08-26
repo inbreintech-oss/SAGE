@@ -72,8 +72,8 @@ TaskUpdate = TaskUpdateInput
 
 
 class UserQueryInput(BaseModel):
-    query: str = Field(description="사용자 질의/요청 사항")
-    tools: List[str] | None = Field(None, description="이미 구성되어 제공 가능한 도구 정보, 사용(호출)만 하라")
+    query: str = Field(description="사용자 질의 — 이 질문에 답하라")
+    tools: List[str] | None = Field(None, description="사용 가능한 MCP 도구 경로")
 
 
 UserQuery = UserQueryInput
@@ -87,15 +87,21 @@ DataQuery = DataQueryInput
 
 
 class SourceErrInput(BaseModel):
+    error: str | None = Field(
+        None,
+        description="실행 오류 원인 — 이것을 고친다. 무시하고 원본을 그대로 반환하면 실패",
+    )
     code: str = Field(description="에러가 발생한 파이썬 소스 코드")
-    error: str | None = Field(None, description="발생한 트레이스백 또는 에러 메시지")
 
 
 SourceErr = SourceErrInput
 
 
 class SourceFixedOutput(BaseModel):
-    fixed_code: str = Field(..., description="교정된 새로운 파이썬 소스 코드")
+    fixed_code: str = Field(
+        ...,
+        description="error 를 해결한 caller.py 전체. 원본 code 를 그대로 복사 금지",
+    )
     explanation: Optional[str] = Field(None, description="수정 내용에 대한 설명")
 
 
@@ -309,7 +315,9 @@ class TaskCodegenInput(BaseModel):
     user_description: str | None = Field(
         None, description="사용자 부가 설명 (req.description) — domain brief inject 조건"
     )
-    report_query: str | None = Field(None, description="보고서 query — domain brief inject 조건")
+    report_query: str | None = Field(
+        None, description="원 사용자 질의 — 종목 수·기간 등 규모는 이 질의를 따른다"
+    )
 
 
 class TaskOutput(BaseModel):

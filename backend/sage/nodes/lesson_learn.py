@@ -27,6 +27,7 @@ _CONTRACT_REF = {
     "RunTaskStructureValidator": "runtime_contract async run_task 시그니처",
     "TaskExecutorPatterns": "instruction.md·reporter_progress",
     "TaskExecutorPatternsValidator": "runtime_contract codegen_contract (validator-synced)",
+    "ToolAccessValidator": "call() 첫 인자 = 요청 tools[] / spec tool_path. tm-* generate id 금지",
 }
 
 
@@ -176,20 +177,21 @@ def format_structured_lesson(
     core = compress_error_for_lesson(error_msg)
     status = "재시도 후 통과 — 동일 위반 재발 금지" if resolved else "반복 주의"
     ref = _contract_ref(category, core or error_msg)
+    relapse = _relapse_prevention(category, core or error_msg)
     return "\n".join(
         [
             f"### [{category}] ({phase}) {status}",
             f"* **원인**: {core or error_msg.strip()[:_CAUSE_KEEP]}",
             f"* **준수 계약**: {ref}",
-            "* **재발 방지**: instruction.md·runtime_contract 와 모순 없이, "
-            "위 원인 contract 를 다시 위반하지 말 것 (코드·import 템플릿 기록 금지)",
+            f"* **재발 방지**: {relapse}",
         ]
     )
 
 
 def validated_llm_reconcile_enabled() -> bool:
-    v = os.environ.get("SAGE_VALIDATED_LLM_RECONCILE", "1").strip().lower()
-    return v not in ("0", "false", "no")
+    # 기본 off — LLM 이 원인·재발 방지를 일반 문구로 덮어쓰지 않게.
+    v = os.environ.get("SAGE_VALIDATED_LLM_RECONCILE", "0").strip().lower()
+    return v in ("1", "true", "yes")
 
 
 async def llm_reconcile_validated_md(
@@ -261,6 +263,36 @@ def _parse_board_key_error(error_msg: str) -> tuple[str | None, list[str]]:
     return bad, allowed
 
 
+def _parse_tool_access_error(error_msg: str) -> tuple[str | None, list[str]]:
+    """ToolAccessValidator — 허용되지 않은 도구 'x' … 목록은 ['a', 'b']."""
+    text = error_msg or ""
+    bad_m = re.search(r"허용되지 않은 도구 '([^']+)'", text)
+    allow_m = re.search(r"사용 가능한 도구 목록은\s*(\[[^\]]+\])", text)
+    bad = bad_m.group(1) if bad_m else None
+    allowed: list[str] = []
+    if allow_m:
+        allowed = re.findall(r"'([^']+)'", allow_m.group(1))
+        if not allowed:
+            allowed = re.findall(r'"([^"]+)"', allow_m.group(1))
+    return bad, allowed
+
+
+def _relapse_prevention(category: str, error_msg: str) -> str:
+    """validated.md 재발 방지 — 구체 구문. '다시 위반하지 말 것' 만으로 끝내지 않는다."""
+    hint = _validator_fix_hint(error_msg)
+    if hint:
+        return hint.replace("\n", " ")
+    if "ToolAccess" in category:
+        return (
+            "await call() 첫 인자는 이번 요청 tools[] / spec tool_path 만. "
+            "generate 초안 tm-* tool_id 는 허용 목록에 없으면 금지."
+        )
+    return (
+        "instruction.md·runtime_contract 와 모순 없이, "
+        "위 원인 contract 를 다시 위반하지 말 것 (코드·import 템플릿 기록 금지)"
+    )
+
+
 def _validator_fix_hint(error_msg: str) -> str:
     """재시도 때 '반복 금지'가 아니라 이번 응답에서 지울 구문·대체 코드를 준다."""
     text = error_msg or ""
@@ -272,7 +304,15 @@ def _validator_fix_hint(error_msg: str) -> str:
             '`if reporter: reporter.update("...", state="running")` 만. '
             "`await call(...)` 은 try 로 감싸지 말 것."
         )
-    if "15개" in text or "축소" in text:
+    if "to_dict" in text and "records" in text:
+        hints.append(
+            "`to_dict(orient='records')` / `to_dict('records')` 를 지운다. "
+            "ctx.update_task value 는 집계 dict/list 만."
+        )
+    if "finalize_report_document" in text and "plan_id=task.plan_id" in text:
+        hints.append(
+            "finalize_report_document(..., plan_id=task.plan_id, did=task.data_id, rid=ctx.rid) 를 그대로 쓴다."
+        )
         hints.append(
             "파일이 있으면 FILE_SOURCE_IDS 에 입력 source_id 를 넣고 SELECTED_TICKERS 는 []. "
             "파일이 없으면 user_query 종목 수만큼 SELECTED_TICKERS 를 채운다. 시총 상위 10개 금지."
@@ -288,6 +328,18 @@ def _validator_fix_hint(error_msg: str) -> str:
         )
     elif bad:
         hints.append(f"get_result key {bad!r} 를 제거하고 catalog 의 허용 key 만 사용하라.")
+    tool_bad, tool_allowed = _parse_tool_access_error(text)
+    if tool_bad or tool_allowed:
+        if tool_allowed:
+            hints.append(
+                f"await call() 첫 인자를 {tool_allowed} 중 하나로 바꿔라. "
+                f"{tool_bad!r} 삭제. generate 초안 tm-* id 는 허용 목록에 없으면 금지."
+            )
+        elif tool_bad:
+            hints.append(
+                f"await call() 첫 인자 {tool_bad!r} 를 지우고 "
+                "이번 요청 tools[] / spec tool_path 만 사용하라."
+            )
     return "\n".join(hints)
 
 

@@ -41,9 +41,9 @@ def test_secret_snippet_uses_real_keys_only() -> None:
     )
     assert "APP_KEY" in block and "APP_SECRET" in block
     assert "API_TOKEN" not in block
-    assert "async def" in block
-    assert "KIS_BASE_URL" in block
-    assert "FID_INPUT_ISCD" in block
+    assert "SECRET_ID" in block
+    assert "get_kis_access_token" not in block
+    assert "FID_INPUT_ISCD" not in block
 
 
 def test_smoke_treats_fail_dict_as_error() -> None:

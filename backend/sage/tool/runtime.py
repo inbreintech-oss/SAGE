@@ -2,7 +2,6 @@
 
 import json
 import re
-import traceback
 import uuid
 from datetime import datetime
 from pathlib import Path
@@ -18,7 +17,27 @@ from sage.logg import warning, debug, error
 from sage.models.doc import ToolStatus
 from sage.models.node import SourceFixed
 from sage.models.tool import ToolPack
+from sage.nodes.lesson_learn import error_signature
+from sage.tool.caller_contract import (
+    caller_source_normalized,
+    format_exec_error_for_sourcefix,
+    rewrite_kwargs_call_injection,
+)
 from sage.tool.metadata import write_metadata
+
+
+async def _flush_exec_lesson(node_key: str | None, err_msg: str, *, resolved: bool) -> None:
+    """실행 실패를 해당 노드 validated.md 에 남긴다. ToolFix 는 embedded 라 학습이 없다."""
+    if not node_key or not (err_msg or "").strip():
+        return
+    try:
+        node = nodes.nodes[node_key]
+    except Exception:
+        return
+    if getattr(node, "is_embedded", False):
+        return
+    node.note_failure("ExecError", err_msg, phase="execute")
+    await node.flush_learned_lessons_async(resolved=resolved)
 
 
 async def _run_caller_via_exec(
@@ -106,6 +125,7 @@ def resolve_id(tool_name: str) -> str:
 def finalize_caller_source(source: str) -> str:
     """
     caller 소스 내 get_transport_path 호출부의 도구 이름을 실제 tm-id로 교체합니다.
+    kwargs['call'] 주입 패턴은 제거한다 (워커는 call 을 인자로 넘기지 않음).
     """
     # 패턴: get_transport_path('도구이름' ... )
     pattern = r"get_transport_path\s*\(\s*['\"]([^'\"]+)['\"]"
@@ -119,7 +139,7 @@ def finalize_caller_source(source: str) -> str:
         resolved = resolve_id(original_name)
         return match.group(0).replace(original_name, resolved)
 
-    return re.sub(pattern, _replacer, source)
+    return rewrite_kwargs_call_injection(re.sub(pattern, _replacer, source))
 
 
 async def execute(tool_id: str, *, reporter=None, **kwargs):
@@ -199,35 +219,56 @@ def _raise_if_tool_reported_fail(res: Any) -> None:
         raise RuntimeError(f"도구가 실패 상태를 반환했습니다: {msg}")
 
 
-async def execute_with_fix(tool, max_retries=3, fix='all', *, reporter=None):
+async def execute_with_fix(
+    tool,
+    max_retries=3,
+    fix='all',
+    *,
+    reporter=None,
+    learn_node: str | None = None,
+):
     """
     도구를 물리적으로 파일화(dump)하고 실행함.
-    실패 시 ToolFix 노드를 통해 코드를 교정하며 재시도함.
+    실패 시 ToolFix 로 교정. 동일 오류 재발 시 중단.
+    learn_node 가 있으면 실행 오류를 그 노드 validated.md 에 남긴다.
     """
     retry_count = 0
-    # tool_status: ToolStatus = "syntax-passed"
+    last_sig = None
+    learned = None
 
     while retry_count <= max_retries:
         try:
-            # 도구 실행 시도
             res = await execute(tool.tool_id, reporter=reporter)
             _raise_if_tool_reported_fail(res)
+            if learned:
+                await _flush_exec_lesson(learn_node, learned, resolved=True)
             return res, tool
         except Exception as e:
-            err_msg = traceback.format_exc()
+            err_msg = format_exec_error_for_sourcefix(e)
+            sig = error_signature(err_msg)
             retry_count += 1
+            learned = err_msg
+            if last_sig == sig:
+                await _flush_exec_lesson(learn_node, err_msg, resolved=False)
+                raise RuntimeError(
+                    f"동일 실행 오류 재발 — ToolFix 가 반영되지 않음.\n{err_msg}"
+                ) from e
+            last_sig = sig
 
             if retry_count <= max_retries:
-                warning(f"[{tool.title}] 실행 실패 ({retry_count}차). 코드 수정 진입. \n오류: {traceback.format_exc()}")
-
-                # [Self-Correction] 에러 로그를 기반으로 도구 코드 교정
-                fixer = nodes.ToolFix()
-                tool = await fixer.run(tool=tool, error=err_msg, fix=fix)
-                dump(tool, target=fix)
+                warning(f"[{tool.title}] 실행 실패 ({retry_count}차). 코드 수정 진입.\n오류: {err_msg}")
+                try:
+                    fixer = nodes.ToolFix()
+                    tool = await fixer.run(tool=tool, error=err_msg, fix=fix)
+                    dump(tool, target=fix)
+                except Exception:
+                    await _flush_exec_lesson(learn_node, err_msg, resolved=False)
+                    raise
                 continue
-            else:
-                # 모든 재시도 횟수 소과 시 최종 예외 발생
-                raise RuntimeError(f"도구 실행 최종 실패 ({max_retries}회 시도 초과)")
+            await _flush_exec_lesson(learn_node, err_msg, resolved=False)
+            raise RuntimeError(
+                f"도구 실행 최종 실패 ({max_retries}회 시도 초과).\n{err_msg}"
+            ) from e
 
 
 async def execute_caller_with_fix(
@@ -235,42 +276,67 @@ async def execute_caller_with_fix(
         max_retries: int = 3,
         *,
         reporter=None,
+        learn_node: str | None = "tool/executor",
 ) -> Tuple[Any, str]:
     """
     caller 소스를 temp workspace 에 기록 후 exec 로 실행.
-    오류 시 ErrorFix 노드로 소스를 수정하여 재시도함.
+    오류 시 SourceFix 로 수정 후 재시도.
+    동일 오류 서명이 재발하거나 소스가 안 바뀌면 즉시 중단.
     """
     import cfg
 
-    current_code = caller_code
+    current_code = rewrite_kwargs_call_injection(finalize_caller_source(caller_code))
     retry_count = 0
+    last_sig = None
+    learned = None
     workspace = Path(cfg.tools_path) / ".exec-caller" / uuid.uuid4().hex[:12]
     workspace.mkdir(parents=True, exist_ok=True)
 
     while retry_count <= max_retries:
         try:
-            current_code = finalize_caller_source(current_code)
+            current_code = rewrite_kwargs_call_injection(finalize_caller_source(current_code))
             (workspace / "caller.py").write_text(current_code, encoding="utf-8")
             result = await _run_caller_via_exec(workspace, reporter=reporter)
             try:
                 json.dumps(result, ensure_ascii=False)
             except Exception as se:
                 raise RuntimeError(f"데이터 직렬화 실패: {str(se)}")
+            if learned:
+                await _flush_exec_lesson(learn_node, learned, resolved=True)
             return result, current_code
 
         except Exception as e:
-            err_msg = traceback.format_exc()
+            err_msg = format_exec_error_for_sourcefix(e)
+            sig = error_signature(err_msg)
             retry_count += 1
+            learned = err_msg
+            if last_sig == sig:
+                await _flush_exec_lesson(learn_node, err_msg, resolved=False)
+                raise RuntimeError(
+                    f"동일 실행 오류 재발 — SourceFix 가 반영되지 않음.\n{err_msg}"
+                ) from e
+            last_sig = sig
 
             if retry_count <= max_retries:
-                print(f"실행 오류 ({retry_count}/{max_retries}). ErrorFix 노드 호출...")
-
+                warning(
+                    f"실행 오류 ({retry_count}/{max_retries}). SourceFix — "
+                    f"{err_msg.splitlines()[1] if len(err_msg.splitlines()) > 1 else err_msg[:200]}"
+                )
                 fixer = nodes.SourceFix()
-                res: SourceFixed = await fixer.run(code=current_code, error=err_msg)
+                try:
+                    res: SourceFixed = await fixer.run(code=current_code, error=err_msg)
+                except Exception:
+                    await _flush_exec_lesson(learn_node, err_msg, resolved=False)
+                    raise
+                if caller_source_normalized(res.fixed_code) == caller_source_normalized(current_code):
+                    await _flush_exec_lesson(learn_node, err_msg, resolved=False)
+                    raise RuntimeError(
+                        f"SourceFix 가 소스를 바꾸지 않았다.\n{err_msg}"
+                    ) from e
                 current_code = res.fixed_code
                 continue
 
+            await _flush_exec_lesson(learn_node, err_msg, resolved=False)
             raise RuntimeError(
-                f"최종 실행 실패 ({max_retries}회 시도 초과).\n"
-                f"최종 에러: {str(e)}"
-            )
+                f"최종 실행 실패 ({max_retries}회 시도 초과).\n{err_msg}"
+            ) from e

@@ -1,7 +1,7 @@
 """tool/generate 질의에서 코드로 복사할 상수만 뽑는다.
 
 TR_ID·URL 경로처럼 질의에 적힌 리터럴을 codegen 선가이드로 붙인다.
-인증·HTTP 골격은 ``sage.secret.prompt`` / tool_pack 예시가 담당한다.
+인증·HTTP 골격은 모델이 짠다. 이 모듈은 질의 리터럴만 뽑는다.
 """
 
 from __future__ import annotations
@@ -37,7 +37,7 @@ def extract_query_literals(query: str | None) -> dict[str, str]:
 
 
 def build_tool_codegen_guide(query: str | None) -> str:
-    """질의 리터럴만. 인증·HTTP 골격은 secret 블록 / tool_pack 예시를 따른다."""
+    """질의 리터럴만."""
     lit = extract_query_literals(query)
     if not lit:
         return ""

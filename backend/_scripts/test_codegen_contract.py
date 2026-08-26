@@ -51,6 +51,12 @@ def _check_validator_source() -> list[str]:
             errors.append(f"validators.py contains forbidden pattern: {pat!r}")
     if "import: from sage.mcp import call" in enrich:
         errors.append("enrich.py still tells LLM to import call")
+    if "prelude 주입" not in enrich or "import 작성 금지" not in enrich:
+        errors.append("report tools_spec lost prelude no-import contract")
+    if "kwargs['call']" not in enrich:
+        errors.append("non-report tools_spec must forbid kwargs['call']")
+    if "from sage.mcp import call" not in enrich:
+        errors.append("non-report tools_spec must require from sage.mcp import call")
     return errors
 
 

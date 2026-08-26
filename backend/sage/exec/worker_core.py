@@ -321,7 +321,9 @@ async def execute_tool_caller_job(job: ExecJob) -> ExecResult:
             raise RuntimeError("main() 함수를 찾을 수 없습니다.")
 
         main_fn = module.main
+        # call 은 prelude/kwargs 주입 없음. caller 가 `from sage.mcp import call`.
         call_kwargs = dict(job.args.get("kwargs") or {})
+        call_kwargs.pop("call", None)
         sig = inspect.signature(main_fn)
         if call_kwargs:
             call_kwargs = {

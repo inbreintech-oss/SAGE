@@ -532,7 +532,9 @@ async def handle_tool_generation(req: ToolGenerateRequest, db: SAGEDataStore):
 
         # smoke caller 실행 — docker_pool + progress tail (report run_task 와 동일)
         reporter = TaskReporter()
-        exec_task = asyncio.create_task(execute_with_fix(pack, reporter=reporter))
+        exec_task = asyncio.create_task(
+            execute_with_fix(pack, reporter=reporter, learn_node="tool/generator")
+        )
         async for msg in reporter.iter_while(exec_task):
             yield SSEEncoder.encode("progress", msg)
             await asyncio.sleep(0)
@@ -641,7 +643,7 @@ async def handle_tool_update(req: ToolUpdateRequest, db: SAGEDataStore):
         # 실제 실행 환경(docker_pool)에서 검증 — progress SSE
         reporter = TaskReporter()
         exec_task = asyncio.create_task(
-            execute_with_fix(updated_tool, reporter=reporter)
+            execute_with_fix(updated_tool, reporter=reporter, learn_node="tool/update")
         )
         async for msg in reporter.iter_while(exec_task):
             yield SSEEncoder.encode("progress", msg)

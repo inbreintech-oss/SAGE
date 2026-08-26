@@ -550,7 +550,14 @@ async def handle_report_generation(req: ReportGenerateRequest, db: SAGEDataStore
             plan_task_ids=[t.task_id for t in plan.tasks],
         )
         persist_jobs: list[asyncio.Task] = []
-        async for ev in iter_plan_tasks(plan, ctx, rid=rid):
+        async for ev in iter_plan_tasks(
+            plan,
+            ctx,
+            rid=rid,
+            tools=api_tools,
+            user_description=req.description,
+            report_query=req.query,
+        ):
             if ev["event"] == "executed":
                 out: TaskOutput = ev["codegen"]
                 task_id = ev["task_id"]
@@ -913,6 +920,8 @@ async def handle_report_update(req: ReportUpdateRequest, db: SAGEDataStore):
                 tools=api_tools,
                 only_tasks=rerun_ids,
                 instruction_extra=req.query,
+                user_description=req.description,
+                report_query=report_doc.query,
         ):
             if ev["event"] == "executed":
                 out: TaskOutput = ev["codegen"]

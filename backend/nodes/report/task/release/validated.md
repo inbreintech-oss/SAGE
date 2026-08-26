@@ -28,9 +28,9 @@
 ---
 
 ## [ReleaseTaskValidator]
-- **최근 업데이트**: 2026-08-22 15:15:16
+- **최근 업데이트**: 2026-08-26 16:51:48
 ### [ReleaseTaskValidator] (codegen) 재시도 후 통과 — 동일 위반 재발 금지
-* **원인**: release: ctx.update_task(..., key="report", ...) 또는 report=... 필요 (runner → report.json, legacy: ['report', 'layout', 'report_layout'])
+* **원인**: release: finalize_report_document(..., plan_id=task.plan_id, did=task.data_id, rid=ctx.rid) 필수
 * **준수 계약**: release/instruction.md 7번·release_contract
-* **재발 방지**: instruction.md·runtime_contract 와 모순 없이, 위 원인 contract 를 다시 위반하지 말 것 (코드·import 템플릿 기록 금지)
+* **재발 방지**: finalize_report_document(..., plan_id=task.plan_id, did=task.data_id, rid=ctx.rid) 를 그대로 쓴다.
 ---

@@ -146,7 +146,7 @@ class ToolCallSummary(BaseModel):
 class ToolExecOutput(BaseModel):
     caller: str = Field(
         json_schema_extra={"validation": "tool"},
-        description="생성된 tool 함수를 호출하고 context 데이터를 주입/생성하는 파이썬 실행 코드",
+        description="질의를 만족하는 caller.py. 도구 원응답을 무조건 그대로 반환하지 말 것",
     )
     summary: ToolCallSummary = Field(description="도구 호출을 위한 메타데이터 및 인자 정보")
 
@@ -173,6 +173,6 @@ class ToolUpdateInput(BaseModel):
 
 
 class ToolErr(BaseModel):
+    error: str = Field(None, description="실행 오류 — 이것을 고친다. 원본 복붙 금지")
     tool: ToolPack = Field(description="수정전 도구 소스 코드")
-    error: str = Field(None, description="오류 요약")
     fix: str = Field("all", description="수정 대상 'all|caller'")

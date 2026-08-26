@@ -1,14 +1,12 @@
-# SAG-E (Backend)
+# SAG-E
 
 **Schema-Augmented Generation & Execution** — LLM과 MCP를 활용해 데이터 통합, 도구 생성, 보고서 codegen·실행까지 이어지는 분석 프레임워크입니다.
 
 스키마 기반 데이터 격리로 분석 환경의 일관성을 유지하고, 검증(validation)과 자가 학습(lesson) 루프를 통해 생성 코드의 신뢰성을 높입니다.
 
 - **License:** [MIT](LICENSE)
-- **Repository:** [github.com/inbreintech-oss/SAGE](https://github.com/inbreintech-oss/SAGE) (`backend/` 디렉터리)
+- **Repository:** [github.com/inbreintech/SAGE.py](https://github.com/inbreintech/SAGE.py)
 - **Maintainer:** [Inbrein](https://github.com/inbreintech) — inbreintech@inbrein.com
-
-> 이 디렉터리는 **n2oss monorepo**의 백엔드 모듈입니다. 저장소 루트에서 `backend/` 로 배치되어 있습니다.
 
 ---
 
@@ -35,8 +33,8 @@
 ## 설치
 
 ```bash
-git clone https://github.com/inbreintech-oss/SAGE.git
-cd SAGE/backend
+git clone https://github.com/inbreintech/SAGE.py.git
+cd SAGE.py
 
 python -m venv .venv
 # Windows
@@ -51,10 +49,10 @@ pip install -r requirements.txt
 
 ## 환경 변수
 
-`backend/` 디렉터리에 `.env` 파일을 만들고 [`.env.example`](.env.example)를 참고해 설정합니다.
+프로젝트 루트에 `.env` 파일을 만들고 [`.env.example`](.env.example)를 참고해 설정합니다.
 
 ```env
-NARRATIX_HOME=D:/prjs/n2oss/backend    # backend 절대 경로 (필수)
+NARRATIX_HOME=/path/to/SAGE.py    # 프로젝트 루트 절대 경로
 GEMINI_API_KEY=your-key-here
 SAGE_LLM_TYPE=gemini              # gemini | gpt-5 | claude | cursor
 SAGE_LLM_TIMEOUT_SEC=600          # codegen 대용량 attach 시 권장
@@ -65,7 +63,7 @@ LOG_LEVEL=INFO
 
 | 변수 | 설명 |
 |------|------|
-| `NARRATIX_HOME` | **backend/** 절대 경로 (`tools/`, `reports/`, `nodes/` 기준). 미설정 시 `cfg.py` 위치 자동 사용 |
+| `NARRATIX_HOME` | 워크스페이스 루트 (`tools/`, `reports/`, `nodes/` 기준) |
 | `SAGE_LLM_TYPE` | 기본 LLM 백엔드 |
 | `SAGE_CURSOR_*` | Cursor Agent 사용 시 모델·런타임·타임아웃 |
 | `GPT_API_KEY` / `CLAUDE_API_KEY` | 해당 LLM 선택 시 |
@@ -81,8 +79,6 @@ LOG_LEVEL=INFO
 DB 스택과 exec pool은 **Compose 프로젝트가 분리**되어 있습니다 (`n2-db` / `n2-exec`).
 exec pool 기동·recycle 시 DB 컨테이너가 내려가지 않도록 분리해 두었습니다.
 
-`backend/` 디렉터리에서 실행:
-
 ```bash
 # DB (postgres + ferretdb + mongo-express) — 한 번 띄우면 restart: unless-stopped
 docker compose up -d
@@ -97,15 +93,11 @@ docker compose -f docker-compose.exec.yml up -d --build
 | FerretDB | MongoDB 호환 API |
 | mongo-express | 웹 UI — http://localhost:8081/ (기본: `admin` / `pass`, `docker-compose.yml` 참고) |
 
-> Exec worker는 호스트의 `NARRATIX_HOME`을 컨테이너 `/host/n2`에 bind mount 합니다. `.env`의 `NARRATIX_HOME`은 **backend 절대 경로**로 설정하세요.
-
 ---
 
 ## 서버 실행
 
 [`cfg.py`](cfg.py)에서 bind 주소·포트를 변경할 수 있습니다 (기본 `localhost:8090`).
-
-`backend/` 디렉터리에서:
 
 ```bash
 python main.py
@@ -138,9 +130,9 @@ uvicorn main:app --host 127.0.0.1 --port 8090
 ## 프로젝트 구조
 
 ```
-backend/
+.
 ├── main.py              # FastAPI 진입점
-├── cfg.py               # 경로·호스트 설정 (NARRATIX_HOME)
+├── cfg.py               # 경로·호스트 설정
 ├── routers/             # REST API (data, report, tool, secret)
 ├── sage/                # 코어 라이브러리
 │   ├── llm/             # LLM 추상화·팩토리
@@ -151,8 +143,8 @@ backend/
 │   ├── tool/            # dump·smoke·generate 가이드
 │   └── data/            # Pangea·스키마 계약
 ├── nodes/               # LLM 노드 (plan, task, pangeaze, tool …)
-├── tools/               # assetize된 MCP 도구 (런타임, git 제외)
-└── reports/             # 생성된 보고서 산출물 (런타임, git 제외)
+├── tools/               # assetize된 MCP 도구
+└── reports/             # 생성된 보고서 산출물
 ```
 
 ---

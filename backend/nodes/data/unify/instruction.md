@@ -17,8 +17,9 @@
     ```
 * **소스별 수집 전략**:
     1. **File 소스**: `source_type`이 "file"인 경우만 `df_map`/`InMemoryDataBridge`에서 `source_id`로 DataFrame을 추출하라. 파일은 필수가 아니다.
-    2. **Tool 소스**: `source_type`이 "tool"인 경우, `df_map`에 존재하지 않는다. `call`로 실시간 수집하라. 파일이 없으면 사용자 질의에 맞게 조회 대상 키 목록을 코드에 생성한 뒤 도구를 호출하라 (없는 파일을 get 하지 말 것).
+    2. **Tool 소스**: `source_type`이 "tool"인 경우, `df_map`에 존재하지 않는다. `from sage.mcp import call` 후 실시간 수집하라. 파일이 없으면 사용자 질의에 맞게 조회 대상 키 목록을 코드에 생성한 뒤 도구를 호출하라 (없는 파일을 get 하지 말 것).
        * 호출 형식: `res = await call("서버경로", "도구명", {"파라미터": "값"})`
+       * 보고서 run_task 의 import 금지/prelude 를 복사하지 말 것. `kwargs['call']` 금지.
        * 반환된 JSON에서 데이터 리스트가 포함된 키(예: `result['items']`)를 찾아 `pd.DataFrame`으로 변환하라.
 * **제약 사항**:
     * 함수 내부에서 임의의 로컬 파일을 읽거나(`pd.read_csv` 등) 외부 저장소에 직접 접근하지 마라.

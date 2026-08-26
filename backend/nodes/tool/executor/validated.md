@@ -1,7 +1,7 @@
 ## [ToolAccessValidator]
-- **최근 업데이트**: 2026-08-22 14:23:36
+- **최근 업데이트**: 2026-08-26 16:22:50
 ### [ToolAccessValidator] (codegen) 재시도 후 통과 — 동일 위반 재발 금지
-* **원인**: 허용되지 않은 도구 'tm-samsung-sugup-e8f9a1b2' 호출이 감지되었습니다. 현재 사용 가능한 도구 목록은 ['tm-kis-investor-f765755d', 'tm-kis-token-manager-b9e3f2a1'] 입니다. 코드(code) 섹션에서 정의한 내부 함수는 caller에서 직접 call()로 호출할 수 없습니다.
-* **준수 계약**: instruction.md + runtime_contract + validator 메시지
-* **재발 방지**: instruction.md·runtime_contract 와 모순 없이, 위 원인 contract 를 다시 위반하지 말 것 (코드·import 템플릿 기록 금지)
+* **원인**: 허용되지 않은 도구 'tm-kis-investor-f765755d' 호출이 감지되었습니다. 현재 사용 가능한 도구 목록은 ['kis/investor'] 입니다.
+* **준수 계약**: call() 첫 인자 = 요청 tools[] / spec tool_path. tm-* generate id 금지
+* **재발 방지**: await call() 첫 인자를 ['kis/investor'] 중 하나로 바꿔라. 'tm-kis-investor-f765755d' 삭제. generate 초안 tm-* id 는 허용 목록에 없으면 금지.
 ---

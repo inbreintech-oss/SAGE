@@ -821,12 +821,62 @@ class ToolFix(NodeV):
 
 [[tool/tool_pack]]
 [[tool/secret_usage]]
-
-질의 TR_ID·URL 경로는 복원. secret 스니펫의 key_name 만 get_secret.
-기상 sync def 를 복사하지 말 것. HTTP 실패는 raise.
 """
+
+    def __init__(self, validators: List[BaseValidator] = None, max_retries: int = 3):
+        super().__init__(
+            validators=[_SourceFixCallerValidator()] + (validators or []),
+            max_retries=max_retries,
+        )
+
+class _SourceFixCallerValidator(BaseValidator):
+    """SourceFixed.fixed_code / ToolPack.caller 에 docker caller 계약 적용."""
+
+    def validate(self, data: Any):
+        from sage.tool.caller_contract import assert_caller_mcp_import, caller_source_of
+
+        src = caller_source_of(data)
+        if not src.strip():
+            return data
+        assert_caller_mcp_import(src)
+        return data
+
+
+class _SourceUnchangedValidator(BaseValidator):
+    """원본과 동일한 fixed_code 는 오류를 무시한 것 — LLM 에 명시적으로 재요청."""
+
+    def __init__(self):
+        super().__init__()
+        self.original = ""
+
+    def validate(self, data: Any):
+        from sage.tool.caller_contract import caller_source_normalized
+
+        src = getattr(data, "fixed_code", "") or ""
+        if self.original and caller_source_normalized(src) == caller_source_normalized(
+            self.original
+        ):
+            raise ValueError(
+                "계약 위반: fixed_code 가 오류 난 원본과 동일하다. "
+                "error 필드의 원인을 반영해 고쳐라. 원본 복붙 금지."
+            )
+        return data
+
 
 @node(input=SourceErr, output=SourceFixed)
 class SourceFix(NodeV):
     """도구 외 caller 소스 오류 수정 전문"""
-    instruction = '소스 수정'
+
+    instruction = """caller.py 만 고친다. error 를 반영하라.
+
+[[tool/caller_api]]
+"""
+
+    def __init__(self, validators: List[BaseValidator] = None, max_retries: int = 3):
+        self._unchanged = _SourceUnchangedValidator()
+        extra = [_SourceFixCallerValidator(), self._unchanged]
+        super().__init__(validators=extra + (validators or []), max_retries=max_retries)
+
+    async def run(self, **kwargs):
+        self._unchanged.original = kwargs.get("code") or ""
+        return await super().run(**kwargs)

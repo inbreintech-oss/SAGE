@@ -89,7 +89,7 @@ class KisStockAdapter(BaseAdapter):
 - **파일 소스는 필수가 아니다.** 입력 `sources` 에 `type=file` 이 있을 때만 `InMemoryDataBridge.get(did, source_id)` 로 키를 읽는다.
 - **파일 없음(도구만)**: `SELECTED_TICKERS` 길이는 **user_query 의 종목 수와 같아야 한다.** 100종이면 100개. 샘플 빈 리스트·시총 상위 10개(005930 등)로 축소 금지.
 - 파일이 있으면 파일 컬럼의 식별자를 쓴다. 파일이 있는데 시총 상위만 쓰기 금지.
-- 도구 호출: `await call(tool_path, tool_name, tool_args)` — **Semaphore(2~5)** + CHUNK_SIZE 분할
+- 도구 호출: 파일 상단 `from sage.mcp import call` 후 `await call(tool_path, tool_name, tool_args)` — **Semaphore(2~5)** + CHUNK_SIZE 분할. 보고서 prelude / `kwargs['call']` 금지.
 - **MCP 호출 직후** `dump_tool_response(did, model, tool_path, key, raw_response)` — TTL 기준선 (원본 응답만)
 - `status != SUCCESS` 이거나 call 예외 → **raise RuntimeError(메시지)** — `except Exception` 금지 (reporter 용 try/except·safe_report 포함)
 - **reporter**: `if reporter: reporter.update(...)` 만. `safe_report` 정의·호출 금지 (report 태스크 전용)

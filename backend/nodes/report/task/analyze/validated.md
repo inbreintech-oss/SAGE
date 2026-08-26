@@ -7,9 +7,9 @@
 ---
 
 ## [TaskExecutorPatternsValidator]
-- **최근 업데이트**: 2026-07-27 14:25:25
-### [TaskExecutorPatternsValidator] (codegen) 반복 주의
+- **최근 업데이트**: 2026-08-26 16:48:29
+### [TaskExecutorPatternsValidator] (codegen) 재시도 후 통과 — 동일 위반 재발 금지
 * **원인**: raw row json(to_dict records) downstream 전달 금지
 * **준수 계약**: runtime_contract codegen_contract (validator-synced)
-* **수정**: 위 계약·validator 오류 메시지를 그대로 반영해 동일 contract 위반 금지
+* **재발 방지**: `to_dict(orient='records')` / `to_dict('records')` 를 지운다. ctx.update_task value 는 집계 dict/list 만.
 ---

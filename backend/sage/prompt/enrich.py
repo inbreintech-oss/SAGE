@@ -123,14 +123,21 @@ async def _tools_spec(rule: EnrichRule, ctx: EnrichContext) -> str:
         except json.JSONDecodeError:
             continue
 
-    header = (
-        "【필수】 codegen: await call(path, tool_name, tool_args) — positional 3개.\n"
-        "  path=spec tool_path, tool_name=spec name, tool_args=dict(spec input.properties 키만).\n"
-        "  call 은 runtime prelude 주입 — executor body 에 import 작성 금지.\n"
-        f"등록 tool: {', '.join(names) if names else '(파싱 실패 — spec JSON 확인)'}\n"
-        "instruction 의 '100일' 등을 days 인자로 넣지 말 것 — spec properties 에 없으면 금지.\n"
-        "spec 에 없는 name·args 추측 (예: get_stock_daily_prices, days) 절대 금지.\n"
-    )
+    # 보고서 plan/task codegen 만 prelude 주입. /tool/exec·generate caller 는 직접 import.
+    prelude = ctx.input_model.__name__ in ("TaskCodegenInput", "ReportPlanInput")
+    catalog = ", ".join(names) if names else "(파싱 실패 — spec JSON 확인)"
+    if prelude:
+        header = (
+            "call(path, name, args) — spec 의 path·name·input.properties 만. "
+            "call 은 prelude 주입, body 에 import 작성 금지.\n"
+            f"등록: {catalog}\n"
+        )
+    else:
+        header = (
+            "call(path, name, args) — spec 의 path·name·input.properties. "
+            "`from sage.mcp import call`. kwargs['call'] 없음.\n"
+            f"등록: {catalog}\n"
+        )
     return header + "\n\n".join(specs)
 
 def _build_upstream_payloads(task_ctx: TaskContext, board_ids: list[str]) -> dict[str, Any]:
@@ -347,7 +354,10 @@ def llm_prompt_fields(
     parts: list[tuple[str, str, Any]] = []
     for name, field_info in input_model.model_fields.items():
         label = field_info.description or name
-        parts.append((name, label, kwargs.get(name, field_info.default)))
+        val = kwargs.get(name, field_info.default)
+        if val is None:
+            continue
+        parts.append((name, label, val))
     for rule in added:
         if rule.target in ("llm_attach",):
             continue
